@@ -1,0 +1,80 @@
+.footer {
+  background-color: #fff;
+  position: relative;
+}
+.footer .footer-top {
+  padding: 20px 0;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .footer .footer-top {
+    padding: 80px 0;
+    padding-top: 40px;
+  }
+}
+@media (max-width: 767px) {
+  .footer .footer-top {
+    padding: 60px 0;
+    padding-top: 20px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .footer .single-footer {
+    margin-top: 40px;
+  }
+}
+@media (max-width: 767px) {
+  .footer .single-footer {
+    margin-top: 40px;
+    text-align: center;
+  }
+}
+.footer .single-footer.f-about {
+  padding-right: 30px;
+}
+@media (max-width: 767px) {
+  .footer .single-footer.f-about {
+    padding: 0;
+  }
+}
+.footer .single-footer.f-about .logo img {
+  width: 180px;
+}
+.footer .single-footer.f-about p {
+  color: #D2D6DC;
+  margin-top: 20px;
+  font-size: 16px;
+}
+.footer .single-footer.f-link li {
+  display: block;
+  margin-bottom: 12px;
+}
+.footer .single-footer.f-link li:last-child {
+  margin: 0;
+}
+.footer .single-footer.f-link li a {
+  font-size: 15px;
+  font-weight: 400;
+  color: #081828;
+}
+.footer .single-footer.f-link li a:hover {
+  color: #767E89;
+}
+.footer .single-footer h3 {
+  font-size: 18px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 35px;
+  color: #081828;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .footer .single-footer h3 {
+    margin-bottom: 25px;
+  }
+}
+@media (max-width: 767px) {
+  .footer .single-footer h3 {
+    margin-bottom: 25px;
+  }
+}
+
+/*# sourceMappingURL=footer.css.map */

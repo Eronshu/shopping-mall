@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
-
+import './ShoppingCart'
+import './res/App.css';
+import './Header';
+import './Category'
+import Header from "./Header";
+import Category from "./Category";
+import Item from "./Item";
+import Footer from "./Footer";
+// import ShoppingCart from "./ShoppingCart";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+
+            <Header />
+            <Category />
+            <div className='container'>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+            </div>
+            <div className='footer'>
+                <Footer/>
+            </div>
+            {/*<BrowserRouter>*/}
+            {/*<Route path='/ShoppingCart' component={ShoppingCart}/>*/}
+            {/*</BrowserRouter>*/}
+        </div>
+    );
 }
 
 export default App;

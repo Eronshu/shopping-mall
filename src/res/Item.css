@@ -1,0 +1,41 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 14px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  border-shadow: 5px 5px 10px -4px #608094;
+  background: #fafafa;
+  margin: 10px;
+  border-top: 1px solid #ffa500;
+  width: 234px;
+  height: 320px;
+}
+.item a {
+  text-decoration: none;
+}
+.item p {
+  display: block;
+  height: 25px;
+  line-height: 25px;
+  font-size: 16px;
+  color: #232326;
+}
+.item .name {
+  font-weight: bold;
+}
+.item .item_price {
+  color: #1baeae;
+}
+.item .content {
+  height: 15px;
+  line-heigh: 15px;
+  color: #aaa;
+  font-size: 12px;
+}
+
+/*# sourceMappingURL=Item.css.map */
