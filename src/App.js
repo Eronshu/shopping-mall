@@ -1,38 +1,35 @@
 import './ShoppingCart'
 import './res/App.css';
-import './Header';
+import './components/Header';
 import './Category'
-import Header from "./Header";
+// import Header from "./components/Header";
+import {Route, BrowserRouter, Link} from 'react-router-dom'
 import Category from "./Category";
 import Item from "./Item";
 import Footer from "./Footer";
-// import ShoppingCart from "./ShoppingCart";
+import ShoppingCart from "./ShoppingCart";
+import React from "react";
+import Header from "./Header"
 function App() {
     return (
         <div>
-
-            <Header />
-            <Category />
-            <div className='container'>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
-                <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'} itemPrice={'$560'}/>
+            <Header/>
+            {/*<Category/>*/}
+            <div>
+                <p>
+                    购物车跳转测试
+                </p>
+            <Link to="/shoppingCart">Shopping Cart(0)</Link>
+                <ShoppingCart/>
             </div>
             <div className='footer'>
                 <Footer/>
             </div>
-            {/*<BrowserRouter>*/}
-            {/*<Route path='/ShoppingCart' component={ShoppingCart}/>*/}
-            {/*</BrowserRouter>*/}
+
+
         </div>
+
+
     );
 }
-
 export default App;
