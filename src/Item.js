@@ -1,7 +1,8 @@
 import './res/Item.css'
+import {Link} from 'react-router-dom'
 const Item = ({itemName, itemImg, itemContent, itemPrice}) =>{
     return <div className='item'>
-        <a href="##">
+        <Link to="/details">
             <div
                 style={{background:`url('${itemImg}') no-repeat center center/cover fixed`,
                     width: `160px`,
@@ -10,7 +11,7 @@ const Item = ({itemName, itemImg, itemContent, itemPrice}) =>{
             <p className='name'>{itemName}</p>
             <p className='content'>{itemContent}</p>
             <p className='item_price'>{itemPrice}</p>
-        </a>
+        </Link>
     </div>
 }
 export default Item

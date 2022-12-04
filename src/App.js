@@ -1,33 +1,32 @@
 import './ShoppingCart'
 import './res/App.css';
 import './components/Header';
-import './Category'
 import './Main'
-// import Header from "./components/Header";
-import {Route, BrowserRouter, Link} from 'react-router-dom'
-import Category from "./Category";
-import Item from "./Item";
-import Footer from "./Footer";
-import ShoppingCart from "./ShoppingCart";
+import Footer from "./components/Footer";
 import React from "react";
-import Header from "./Header"
+import Header from "./components/Header"
 import Main from "./Main"
+import SideBar from "./SideBar";
+import ItemDetails from "./ItemDetails";
+
 function App() {
     return (
-        <div>
+        <>
             <Header/>
-            {/*<Category/>*/}
-            <div>
-                <Main/>
+            <SideBar/>
+            <div id="page">
+                {/*<Category/>*/}
+                <div id = "mainPage">
+                    <Main/>
+                </div>
+
             </div>
             <div className='footer'>
                 <Footer/>
             </div>
-
-
-        </div>
-
+        </>
 
     );
 }
+
 export default App;

@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -54,7 +53,7 @@ export default function SignIn() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Log in
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
@@ -87,17 +86,17 @@ export default function SignIn() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Log in
                         </Button>
                         <Grid container>
-                            <Grid item xs>
-                                <Link href="src/Login#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
+                            {/*<Grid item xs>*/}
+                            {/*    <Link href="src/Login#" variant="body2">*/}
+                            {/*        Forgot password?*/}
+                            {/*    </Link>*/}
+                            {/*</Grid>*/}
                             <Grid item>
                                 <Link href="src/Login#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                    {"Don't have an account? Create an account"}
                                 </Link>
                             </Grid>
                         </Grid>

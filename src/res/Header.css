@@ -6,6 +6,7 @@
   flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
 }
 .center ul {
   display: flex;
@@ -22,12 +23,6 @@
   color: #b0b0b0;
   padding: 0 8px;
   border-right: 1px solid #b0b0b0;
-}
-.center login {
-  display: flex;
-  align-items: center;
-  width: 98px;
-  height: 40px;
 }
 .center .shopcart a {
   display: flex;

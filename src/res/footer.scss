@@ -1,48 +1,11 @@
 @import "variables.scss";
 .footer {
-  //     background-color: $black;
-  background-color: $white;
-  // background-color: #767E89;
+  background-color: #f9f9f9;
   position: relative;
-
-
   .footer-top {
     padding: 20px 0;
-
-    @media #{$md} {
-      padding: 80px 0;
-      padding-top: 40px;
-    }
-
-    @media #{$xs} {
-      padding: 60px 0;
-      padding-top: 20px;
-    }
   }
-
   .single-footer {
-    @media #{$md} {
-      margin-top: 40px;
-    }
-
-    @media #{$xs} {
-      margin-top: 40px;
-      text-align: center;
-    }
-
-    &.f-about {
-      padding-right: 30px;
-
-      @media #{$xs} {
-        padding: 0;
-      }
-
-      .logo {
-        img {
-          width: 180px;
-        }
-      }
-
       p {
         color: #D2D6DC;
         margin-top: 20px;
@@ -52,8 +15,9 @@
 
     &.f-link {
       li {
+        flex-direction: row;
         display: block;
-        margin-bottom: 12px;
+        //margin-bottom: 12px;
 
         &:last-child {
           margin: 0;
@@ -62,8 +26,7 @@
         a {
           font-size: 15px;
           font-weight: 400;
-          color: $black;
-          //                     color: #D2D6DC;
+          color: $blue;
 
           &:hover {
             color: $theme-color;
@@ -76,19 +39,7 @@
       font-size: 18px;
       font-weight: 600;
       display: block;
-      margin-bottom: 35px;
+      //margin-bottom: 20px;
       color: $black;
-      //             color: #D2D6DC;
-
-      @media #{$md} {
-        margin-bottom: 25px;
-      }
-
-      @media #{$xs} {
-        margin-bottom: 25px;
-      }
     }
   }
-
-
-}

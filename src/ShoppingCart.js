@@ -1,17 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-// export default class ShoppingCart extends Component{
-//     render() {
-//         return(
-//             <h3>这里是购物车</h3>
-//         )
-//     }
-// }
-const ShoppingCart = () =>{
+import {Link} from "react-router-dom";
+class ShoppingCart extends React.Component {
+    render(){
         return (
-            <div className='ShoppingCart'>
-                <h1>这是ShoppingCart页面</h1>
+            <div className="CartRoot">
+                <header className="header">
+                    <h3 className="title">My Shopping Cart</h3>
+                </header>
+                <main className="container">
+                    {/*{this.buildTable()}*/}
+                </main>
+                <footer className="CartFooter">
+                    <Link to="/">Continue shopping</Link>
+                    <p className="totalMoney">Total(Tax not include)：<span className="totalnum">$1234</span></p>
+                    <p className="submit" onClick={this.onSubmit}>Check Out</p>
+                </footer>
             </div>
         )
+    }
 }
 export default ShoppingCart

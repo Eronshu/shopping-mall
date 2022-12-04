@@ -6,6 +6,8 @@
   flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  //padding-top: 60px;
   ul{
     display:flex;
     flex-direction: row;
@@ -22,13 +24,6 @@
       border-right: 1px solid #b0b0b0;
 
     }
-  }
-
-  login{
-    display: flex;
-    align-items: center;
-    width: 98px;
-    height: 40px;
   }
   .shopcart a{
     display: flex;

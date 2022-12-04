@@ -1,82 +1,9 @@
-
 .container{
-
   display:flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   width: 1280px;
-
+  margin-left: 300px;
 }
 
-div{
-
-}
-//$primary: #1baeae;
-//$orange: #FF6B01;
-//$bc: #F7F7F7;
-//$fc:#fff;
-//.home-header {
-//  position: fixed;
-//  left: 0;
-//  top: 0;
-//  //.wh(100%, 50px);
-//  //.fj();
-//  line-height: 50px;
-//  padding: 0 15px;
-//  //.boxSizing();
-//  font-size: 15px;
-//  color: #fff;
-//  z-index: 10000;
-//  .nbmenu2 {
-//    color:$primary;
-//  }
-//  &.active {
-//    background:$primary;
-//    .nbmenu2 {
-//      color: #fff;
-//    }
-//    .login {
-//      color: #fff;
-//    }
-//  }
-//
-//  .header-search {
-//    display: flex;
-//    //.wh(74%, 20px);
-//    line-height: 20px;
-//    margin: 10px 0;
-//    padding: 5px 0;
-//    color: #232326;
-//    background: rgba(255, 255, 255, .7);
-//    border-radius: 20px;
-//    .app-name {
-//      padding: 0 10px;
-//      color: $primary;
-//      font-size: 20px;
-//      font-weight: bold;
-//      border-right: 1px solid #666;
-//    }
-//    .icon-search {
-//      padding: 0 10px;
-//      font-size: 17px;
-//    }
-//    .search-title {
-//      font-size: 12px;
-//      color: #666;
-//      line-height: 21px;
-//    }
-//  }
-//  .icon-iconyonghu{
-//    color: #fff;
-//    font-size: 22px;
-//  }
-//  .login {
-//    color:$primary;
-//    line-height: 52px;
-//    .van-icon-manager-o {
-//      font-size: 20px;
-//      vertical-align: -3px;
-//    }
-//  }
-//}
