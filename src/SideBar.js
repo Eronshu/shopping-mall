@@ -5,7 +5,7 @@ class SideBar extends Component {
     search = () =>{
         const{searchWordElement:{value:searchWord}} = this
         console.log(searchWord)
-        axios.get('http://api.github.com/search/users',{
+        axios.get('',{
             params:{
                 q:searchWord,
             }
