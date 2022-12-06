@@ -1,26 +1,23 @@
 import React from 'react'
-import './res/Header.css'
+// import './res/Header.css'
+import './res/Main.css'
 import Item from "./Item";
-const Main = () =>{
-    return(
-    <div className='container'>
-        <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'}
-              itemPrice={'$560'}/>
-        <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'}
-              itemPrice={'$560'}/>
-        <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'}
-              itemPrice={'$560'}/>
-        <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'}
-              itemPrice={'$560'}/>
-        <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'}
-              itemPrice={'$560'}/>
-        <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'}
-              itemPrice={'$560'}/>
-        <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'}
-              itemPrice={'$560'}/>
-        <Item itemName={'Huawei 17xxxxxxxxxxxxx'} itemImg={''} itemContent={'It\'s just a test'}
-              itemPrice={'$560'}/>
-    </div>
-    )
+
+export default class Main extends React.Component {
+
+    render() {
+        return (
+            <div className='container'>
+                {
+                    this.props.items?.map((itemObj) => {
+                        return (
+                            <Item itemName={itemObj.id} itemImg={itemObj.avatar_url} itemContent={itemObj.login}
+                                  itemPrice={'$560'}/>
+                        )
+                    })
+                }
+
+            </div>
+        )
+    }
 }
-export default Main

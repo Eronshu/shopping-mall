@@ -1,7 +1,23 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-
+import axios from "axios";
 class SideBar extends Component {
+    search = () =>{
+        const{searchWordElement:{value:searchWord}} = this
+        console.log(searchWord)
+        axios.get('http://api.github.com/search/users',{
+            params:{
+                q:searchWord,
+            }
+        }).then(
+            response=>{
+                this.props.saveItems(response.data.items)
+                console.log(response.data)
+            }
+        ).catch(
+            err=>console.log(err)
+        )
+    }
     render() {
         return (
             <div id="sidebar">
@@ -14,12 +30,14 @@ class SideBar extends Component {
                             placeholder="Search"
                             type="search"
                             name="q"
+                            ref={c=>this.searchWordElement = c}
                         />
                     </form>
-                    <form method="post">
-                        <button type="submit">Search</button>
-                    </form>
+                    {/*<form method="post">*/}
+                        <button onClick={this.search} type="submit">Search</button>
+                    {/*</form>*/}
                 </div>
+
                 <nav>
                     <ul>
                         <li>

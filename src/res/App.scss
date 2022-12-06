@@ -1,9 +1,27 @@
-.container{
+//.container{
+//  display:flex;
+//  flex-direction: row;
+//  flex-wrap: wrap;
+//  justify-content: space-between;
+//  width: 1280px;
+//  margin-left: 300px;
+//}
+.container {
+  /* width: 100%; */
+  max-width: 1200px;
+  padding-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.main{
   display:flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 1280px;
-  margin-left: 300px;
+  justify-content:center;
 }
-
+.page {
+  margin: 50px 0 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

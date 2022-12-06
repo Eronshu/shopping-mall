@@ -18,7 +18,9 @@
   a{
     text-decoration: none;
   }
-  div{}
+  div{
+    margin: 0px;
+  }
   p{
     display:block;
     height:25px;
@@ -39,4 +41,13 @@
     color:#aaa;
     font-size:12px;
   }
+}
+.item:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-top: -8px;
+  margin-bottom: 24px;
+}
+.card_image {
+  width: 180px;
+  height: 180px;
 }

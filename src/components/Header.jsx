@@ -2,28 +2,27 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 
 class Header extends Component {
+    constructor(props) {
+        super(props)
+        // this.state = {
+        //     list: [],
+        //     page: 1
+        // }
+    }
     render() {
         return (
             <div className='center'>
                 <div className="shopcart">
-                    {/*<BrowserRouter>*/}
-                    {/*<a href="/ShoppingCart">Shopping Cart(0)</a>*/}
-                    <Link to='/shoppingCart'>Shopping Cart(0)</Link>
+                    <Link to='/shoppingCart'>Shopping Cart{this.props.items.length ? "("+this.props.items.length+")" : null}</Link>
                     {/*</BrowserRouter>*/}
                 </div>
                 <div>
                     <ul className="login">
                         <li>
-                            {/*<BrowserRouter>*/}
                             <Link to='/login'>Log In</Link>
-                            {/*<a href="./login">Log In</a>*/}
-                            {/*</BrowserRouter>*/}
                         </li>
                         <li>
-                            {/*<BrowserRouter>*/}
                             <Link to='/register'>Register</Link>
-                            {/*</BrowserRouter>*/}
-                            {/*<a href="./login">Register</a>*/}
                         </li>
                     </ul>
                 </div>

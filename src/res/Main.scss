@@ -1,0 +1,11 @@
+.container {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 1024px;
+
+  //position:absolute;
+  right:10%;
+
+}

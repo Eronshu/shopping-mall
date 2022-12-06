@@ -1,11 +1,13 @@
 #sidebar {
-  width: 300px;
+  width: 23vh;
   background-color: #f7f7f7;
   border-right: solid 1px #e3e3e3;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  position: absolute;
-  height: 60%;
+  position: sticky;
+  height: 60vh;
+  top: 40px;
+  z-index: 100;
 }
 
 #sidebar > * {

@@ -4,6 +4,9 @@
 }
 .footer .footer-top {
   padding: 20px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 .footer .single-footer p {
   color: #D2D6DC;

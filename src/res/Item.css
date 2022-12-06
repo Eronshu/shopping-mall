@@ -18,6 +18,9 @@
 .item a {
   text-decoration: none;
 }
+.item div {
+  margin: 0px;
+}
 .item p {
   display: block;
   height: 25px;
@@ -36,6 +39,17 @@
   line-heigh: 15px;
   color: #aaa;
   font-size: 12px;
+}
+
+.item:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-top: -8px;
+  margin-bottom: 24px;
+}
+
+.card_image {
+  width: 180px;
+  height: 180px;
 }
 
 /*# sourceMappingURL=Item.css.map */
