@@ -4,90 +4,77 @@ import './components/Header';
 import './Main'
 import Footer from "./components/Footer";
 import React from "react";
-import Header from "./components/Header"
 import SideBar from "./SideBar";
-import {connect} from "react-redux";
 import Item from "./Item";
-import initState from "./redux/state";
-import {Pagination} from "antd";
+import { Pagination } from "antd";
+import { Link } from "react-router-dom";
+import { getItemsMock } from './api'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from "react-router-dom";
 
-class App extends React.Component {
-    constructor(props) {
-        super(props)
-        // this.state = {list: []}
-        this.state = {
-            list: [],
-            page: 1
-        }
-        this.onProductCardClick = this.onProductCardClick.bind(this)
-        this.onPageChange = this.onPageChange.bind(this)
+export default function App(props) {
+    const [shopList, setShopList] = useState([])
+    const [list, setList] = useState([])
+    const [page, setPage] = useState(1)
+    const pageSize = 12
+    const navigate = useNavigate();
+    const jumpToItem = (id) => {
+        console.log(`/details/${id}`)
+        debugger
+        navigate(`/details/${id}`)
     }
-
-    //initialize
-    saveItems = (items) => {
-        this.setState({items})
-    }
-
-    componentDidMount() {
-        this.setState({list: initState.list})
-    }
-
-    onPageChange(page) {
-        this.setState({page})
-    }
-
-    onProductCardClick(itemObj) {
-        console.log(itemObj)
-        this.props.history.push({pathname: "/details"},{state: itemObj})
-
-    }
-
-    render() {
-        let shopList = this.props.shopList
-        let {list, page} = this.state
-        let startIdx = (page - 1) * 10, endIdx = page * 10
-        return (
-            <>
-                <Header/>
-                <div className='main'>
-                    <SideBar saveItems={this.saveItems}/>
-                    <div className='container'>
-                        {list.slice(startIdx, endIdx).map((itemObj, idx) => (
+    useEffect(() => {
+        getItemsMock().then(res => {
+            setList(res.data)
+        })
+    }, [])
+    return (
+        <>
+            <div className='center'>
+                <div className="shopcart">
+                    <Link to='/shoppingCart'>Shopping Cart{props.data.length}</Link>
+                    {/*</BrowserRouter>*/}
+                </div>
+                <div>
+                    <ul className="login">
+                        <li>
+                            <Link to='/login'>Log In</Link>
+                        </li>
+                        <li>
+                            <Link to='/register'>Register</Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div className='main'>
+                <SideBar setData={props.setData} />
+                <div className='container'>
+                    {list.slice(page * pageSize - pageSize, page * pageSize).map((itemObj, idx) => (
+                        <Link to={`/details/${itemObj.id}`} key={itemObj.id} >
                             <Item itemName={itemObj.name}
                                   itemImg={itemObj.image}
                                   itemContent={itemObj.desc}
                                   itemPrice={itemObj.price}
-                                  onClick={() => {this.onProductCardClick(itemObj)}}
-                                  key={"item_" + idx}
                             />
-                        ))
-                        }
-                    </div>
+                        </Link>
+                    ))
+                    }
                 </div>
-                <footer className={page}>
-                    <Pagination
-                        defaultCurrent={1}
-                        current={page}
-                        total={list.length}
-                        onChange={this.onPageChange}
-                    ></Pagination>
-                </footer>
+            </div>
+            <footer className={page}>
+                <Pagination
+                    defaultCurrent={1}
+                    current={page}
+                    total={list.length}
+                    onChange={newPage => setPage(newPage)}
+                ></Pagination>
+            </footer>
 
-                <div className='footer'>
+            <div className='footer'>
 
-                    <Footer/>
-                </div>
-            </>
+                <Footer />
+            </div>
+        </>
 
-        );
-
-    }
+    );
 }
-
-function mapStateToProps(state) {
-    return {
-        shopList: state.shopList
-    }
-}
-
-export default connect(mapStateToProps)(App)
