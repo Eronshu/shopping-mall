@@ -1,17 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React, {useState, useEffect} from 'react';
+import {Link} from "react-router-dom";
 import axios from "axios";
-import { getItems } from './api'
+import {
+    getAllItemBrands,
+    getAllItems,
+    getAllItemTypes,
+    getItems,
+    searchItemByBrand,
+    searchItemByKeyword,
+    searchItemByType
+} from './api'
 import './res/sidebar.css'
+function toggleMenu(e) {
+    const ul = e.target.querySelector('ul');
+    ul.classList.toggle('hidden');
+}
+function stopPropagation(e) {
+    e.stopPropagation();
+}
 function SideBar(props) {
-    const [type, setType] = useState('')
     const [keyword, setKeyword] = useState('')
+    const [brands, setBrands] = useState([]);
+    const [types, setTypes] = useState([]);
+
+    useEffect(() => {
+        getAllItemBrands().then(res => {
+            setBrands(res.data.data)
+        })
+        getAllItemTypes().then(res => {
+            setTypes(res.data.data)
+        })
+
+    }, [])
     const search = () => {
-        getItems({
-            type,
+        console.log(keyword)
+        searchItemByKeyword(
             keyword
-        }).then(res => {
-            props.setData(res.data)
+        ).then(res => {
+            console.log(res)
+            props.setList(res.data.data)
+        })
+    }
+    const brand = (brand) => {
+        console.log(brand)
+        searchItemByBrand(
+            brand
+        ).then(res => {
+            console.log(res)
+            props.setList(res.data.data)
+        })
+    }
+    const type = (type) => {
+        console.log(type)
+        searchItemByType(
+            type
+        ).then(res => {
+            console.log(res)
+            props.setList(res.data.data)
         })
     }
     return (
@@ -36,11 +81,21 @@ function SideBar(props) {
 
             <nav>
                 <ul>
-                    <li className={'sidebtn ' +('Brand' === type? 'active':'')} onClick={() => setType('Brand')}>
+                    <li className={'sidebtn ' + ('Brand' === type ? 'active' : '')} onClick={(e) => toggleMenu(e)}>
                         Brand
+                        <ul className="hidden" onClick={(e) => stopPropagation(e)}>
+                            {brands.map((brandsObj, index) => (
+                                    <li key={brandsObj.id} onClick={(e)=>brand(brandsObj)}>{brandsObj}</li>
+                            ))}
+                        </ul>
                     </li>
-                    <li className={'sidebtn ' + ('Type' === type? 'active':'')} onClick={() => setType('Type')}>
+                    <li className={'sidebtn ' + ('Type' === type ? 'active' : '')} onClick={(e) => toggleMenu(e)}>
                         Type
+                        <ul className="hidden" onClick={(e) => stopPropagation(e)}>
+                            {types.map((typesObj, index) => (
+                                <li key={typesObj.id} onClick={(e)=>type(typesObj)}>{typesObj}</li>
+                            ))}
+                        </ul>
                     </li>
                 </ul>
             </nav>

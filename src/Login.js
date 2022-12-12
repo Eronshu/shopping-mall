@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {login} from './api'
+import * as React from "react";
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -32,19 +33,20 @@ export default function SignIn() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        // console.log({
+        //     email: data.get('email'),
+        //     password: data.get('password'),
+        // });
         login({
-            email: data.get('email'),
+            username: data.get('email'),
             password: data.get('password'),
         }).then(res => {
+           console.log(res)
             debugger
+            localStorage.setItem('token', res.data.token);
         }).catch(err => {
             debugger
         })
-
     };
     return (
         <ThemeProvider theme={theme}>
@@ -69,10 +71,10 @@ export default function SignIn() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
+                            id="User Name"
+                            label="User Name"
                             name="email"
-                            autoComplete="email"
+                            // autoComplete="User Name"
                             autoFocus
                         />
                         <TextField
@@ -104,8 +106,8 @@ export default function SignIn() {
                             {/*    </Link>*/}
                             {/*</Grid>*/}
                             <Grid item>
-                                <Link href="src/Login#" variant="body2">
-                                    {"Don't have an account? Create an account"}
+                                <Link href="/register" variant="body2">
+                                    Don't have an account? Create an account
                                 </Link>
                             </Grid>
                         </Grid>
