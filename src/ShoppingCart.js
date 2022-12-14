@@ -14,11 +14,11 @@ export default function ShoppingCart(props) {
         debugger;
     };
 
-    // Function to handle submitting the shopping cart
-    const onSubmit = () => {
-        // TODO: Implement this function
-        debugger;
-    };
+    // // Function to handle submitting the shopping cart
+    // const onSubmit = () => {
+    //     // TODO: Implement this function
+    //     debugger;
+    // };
 
     // Columns to be displayed in the shopping cart table
     const columns = [
@@ -87,10 +87,10 @@ export default function ShoppingCart(props) {
                 <p className="totalMoney">
                     Total(Tax not include): <span className="totalum">${totalPrice}</span>
                 </p>
-                <p className="submit" onClick={onSubmit}>
-                    {/*<link to = "/checkout">*/}
+                <p className="submit" >
+                    <Link style={{textDecoration: 'none'}} to = "/checkout">
                         Check Out
-                    {/*</link>*/}
+                    </Link>
                 </p>
             </footer>
         </div>

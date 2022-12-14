@@ -1,65 +1,115 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:8080/EECS4413Project'
 const token = localStorage.getItem('token');
+
+//---------------UserController-----------------------//
 // Login
 // curl -X POST http://localhost:8080/EECS4413Project/rest/users/sign-in  -d 'username=whc&password=ab2afbe27448b79c2d66950ec6a24c5e2efd13db28fc91684ffab8392995334d'
 export function login({ username, password }) {
-    // const params = new URLSearchParams();
-    // params.append('username', username);
-    // params.append('password', password);
-    const forms = new FormData();
-    forms.append('username', username);
-    forms.append('password', password);
-    console.log(forms)
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    console.log(formData)
     return axios({
-        url: `${baseUrl}/rest/users/sign-in`,
+        url: `${baseUrl}/rest/user/sign-in`,
         method: 'post',
-        data: forms,
+        data: formData,
         headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
     })
 }
 
-export function register({ username, password }) {
-    const forms = new FormData();
-    forms.append('username', username);
-    forms.append('password', password);
-    console.log(forms)
-    return axios({
-        url: `${baseUrl}/rest/users`,
-        method: 'post',
-        data: forms,
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
+export function register({username,password}) {
+    // const formData = new URLSearchParams();
+    // formData.append('username', username);
+    // formData.append('password', password);
+    // console.log(formData)
+    return axios.post('http://localhost:8080/EECS4413Project/rest/user/sign-in', {
+        username: username,
+        password: password,
     })
-}
 
-// export function logout({ username, password }) {
-//     const params = new URLSearchParams();
-//     params.append('username', username);
-//     params.append('password', password);
+}
+// export function register(data) {
+//     // const formData = new URLSearchParams();
+//     // formData.append('username', username);
+//     // formData.append('password', password);
+//     console.log(data)
 //     return axios({
-//         url: `${baseUrl}/rest/users`,
+//         url: `${baseUrl}/rest/user`,
 //         method: 'post',
-//         data: params,
+//         data: data,
 //         headers: {
-//             'Content-Type': 'x-www-form-urlencoded',
-//             'Authorization': token,
+//             'Content-Type': 'multipart/form-data'
 //         }
 //     })
 // }
+
 // Logout
-export function logout(token) {
+export function logout() {
     return axios({
-        url: `${baseUrl}/rest/users/sign-out`,
+        url: `${baseUrl}/rest/user/sign-out`,
         method: 'post',
         headers: {
             'Authorization': token,
         },
     });
 }
+//getRecoveryQuestion
+export function getRecoveryQuestion(username) {
+    const data = new URLSearchParams();
+    data.append('username', username);
+    return axios({
+        url: `${baseUrl}/rest/user/recover`,
+        method: 'get',
+        data:data,
+    });
+}
+//setRecoveryInfo
+export function setRecoveryInfo(question,answer) {
+    const data = new FormData();
+    data.append('question', question);
+    data.append('answer',answer)
+    return axios({
+        url: `${baseUrl}/rest/user/recover`,
+        method: 'post',
+        data:data,
+        headers: {
+            'Authorization': token,
+        }
+    });
+}
+//changePassword
+export function changePassword(newPassword) {
+    const data = new FormData();
+    data.append('new_password', newPassword)
+    return axios({
+        url: `${baseUrl}/rest/user/change-password`,
+        method: 'post',
+        data:data,
+        headers: {
+            'Authorization': token,
+        }
+    });
+}
+//setRecoveryInfo
+export function recoverPassword(username,answer,new_password) {
+    const data = new FormData();
+    data.append('username', username);
+    data.append('answer',answer);
+    data.append('new_password',new_password)
+    return axios({
+        url: `${baseUrl}/rest/user/recover-password`,
+        method: 'post',
+        data:data,
+        headers: {
+            'Authorization': token,
+        }
+    });
+}
+
+//-------------------itemController---------------------------//
 //ITEMS API:
 export function getItems({type, keyword}) {
     debugger
@@ -68,23 +118,13 @@ export function getItems({type, keyword}) {
         method: 'get'
     })
 }
+
 // Get all items
 export function getAllItems() {
     return axios({
         url: `${baseUrl}/rest/item`,
         method: 'get',
-        headers: {
-            'Content-Type': 'x-www-form-urlencoded',
-            // "Access-Control-Allow-Origin":"*"
-        }
-    });
-}
 
-// Get items of one page,所以说这是啥东西？
-export function getItemsOfOnePage(page, count) {
-    return axios({
-        url: `${baseUrl}/rest/item?page=${page}&count=${count}`,
-        method: 'get',
     });
 }
 
@@ -114,6 +154,7 @@ export function getAllItemTypes() {
         method: 'get',
     });
 }
+
 // Get all item brands
 export function getAllItemBrands() {
     return axios({
@@ -149,28 +190,47 @@ export function getItemByIdMock(id) {
             })            
         })
     })
-     
+}
+//------------------------------------shoppingCartController-----------------------------------//
+//SHOPPING CART:
+// const shoppingCartItems = [
+//     {item_id: 'XXX', quantity: 0},
+//     {item_id: '051EZXVTANB1QGD4', quantity: 3},
+//     {item_id: '0EIHD7I9TGLOSY6C', quantity: 5}
+// ];
+
+//用户登录后把购物车里的数据传进去，同步购物车
+export function syncShoppingCart(shoppingCartItems) {
+    return axios({
+        url: `${baseUrl}/rest/cart`,
+        method: 'post',
+        data: shoppingCartItems,
+        headers: {
+            Authorization: token,
+            'Content-Type': 'application/json'
+        }
+    });
 }
 
-//SHOPPING CART:
 // Update cart item
-export function updateCartItem(itemId, quantity, token) {
-    const params = new URLSearchParams();
-    params.append('item_id', itemId);
-    params.append('quantity', quantity);
+export function updateShoppingCartItem(itemId, quantity) {
+    const formData = new FormData();
+    formData.append('item_id', itemId);
+    formData.append('quantity', quantity);
+
     return axios({
         url: `${baseUrl}/rest/cart`,
         method: 'put',
-        data: params,
+        data: formData,
         headers: {
-            'Content-Type': 'x-www-form-urlencoded',
-            'Authorization': token,
-        },
+            Authorization: token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
     });
 }
 
 // Delete cart item
-export function deleteCartItem(itemId, token) {
+export function deleteCartItem(itemId) {
     return axios({
         url: `${baseUrl}/rest/cart/${itemId}`,
         method: 'delete',
@@ -179,6 +239,18 @@ export function deleteCartItem(itemId, token) {
         },
     });
 }
+
+//get all cart items
+export function getAllCartItems(itemId) {
+    return axios({
+        url: `${baseUrl}/rest/cart`,
+        method: 'get',
+        headers: {
+            'Authorization': token,
+        },
+    });
+}
+
 // Get all orders
 export function getOrders(token) {
     return axios({
@@ -239,76 +311,5 @@ export function getCartMock() {
         method: 'get'
     })
 }
-export function getCommentMock() {
-    return axios({
-        url: `/comment.json`,
-        method: 'get'
-    })
-}
-//ADDRESS
-export function addAddress({ street, province, country, zip, phone }) {
-    const params = new URLSearchParams();
-    params.append('street', street);
-    params.append('province', province);
-    params.append('country', country);
-    params.append('zip', zip);
-    params.append('phone', phone);
-    return axios({
-        url: `${baseUrl}/rest/address`,
-        method: 'post',
-        data: params,
-        headers: {
-            'Content-Type': 'x-www-form-urlencoded',
-            'Authorization': token
-        }
-    })
-}
 
-export function updateAddress({ address_id, street, province, country, zip, phone }) {
-    const params = new URLSearchParams();
-    params.append('address_id', address_id);
-    params.append('street', street);
-    params.append('province', province);
-    params.append('country', country);
-    params.append('zip', zip);
-    params.append('phone', phone);
-    return axios({
-        url: `${baseUrl}/rest/address`,
-        method: 'put',
-        data: params,
-        headers: {
-            'Content-Type': 'x-www-form-urlencoded',
-            'Authorization': token
-        }
-    })
-}
 
-export function deleteAddress(address_id) {
-    return axios({
-        url: `${baseUrl}/rest/address/${address_id}`,
-        method: 'delete',
-        headers: {
-            'Authorization': token
-        }
-    })
-}
-
-export function getAddress(address_id) {
-    return axios({
-        url: `${baseUrl}/rest/address/${address_id}`,
-        method: 'get',
-        headers: {
-            'Authorization': token
-        }
-    })
-}
-
-export function getAddresses() {
-    return axios({
-        url: `${baseUrl}/rest/address`,
-        method: 'get',
-        headers: {
-            'Authorization': token
-        }
-    })
-}

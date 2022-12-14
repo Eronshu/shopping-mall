@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function App(props) {
-    const [shopList, setShopList] = useState([]);
+    // const [shopList, setShopList] = useState([]);
     const [list, setList] = useState([]);
     const [page, setPage] = useState(1);
     const pageSize = 12;

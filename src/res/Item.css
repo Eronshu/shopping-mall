@@ -14,6 +14,7 @@
   border-top: 1px solid #ffa500;
   width: 234px;
   height: 320px;
+
 }
 .item a {
   text-decoration: none;
@@ -30,6 +31,9 @@
 }
 .item .name {
   font-weight: bold;
+  width: 200px;
+  overflow: hidden;
+  textOverflow: ellipsis;
 }
 .item .item_price {
   color: #1baeae;

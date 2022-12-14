@@ -2,9 +2,6 @@ import React, { useState, useEffect, Component } from 'react'
 import { Row, Col, Radio, Button, message } from 'antd'
 // #6caef9 #3b93f7
 import './res/ItemDetail.css'
-// redux
-import { AddProduct } from './redux/actions'
-import { connect } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import {getItemByIdMock, getSpecificItem} from './api'
 import CommentList from "./components/CommentList";

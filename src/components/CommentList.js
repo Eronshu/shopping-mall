@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {getCommentMock} from "../api";
+import {getCommentMock} from "../api/reviewApi";
 import {Link} from "react-router-dom";
 import Item from "../Item";
 
@@ -10,7 +10,6 @@ function CommentList() {
             setComment(res.data)
         })
     }, [])
-
 
     return (
         <div>
