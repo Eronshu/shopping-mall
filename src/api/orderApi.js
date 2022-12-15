@@ -4,7 +4,7 @@ const token = localStorage.getItem('token');
 
 // Create order
 export function createOrder(firstName, lastName, addressID) {
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     formData.append('firstName', firstName);
     formData.append('lastName', lastName);
     formData.append('addressID', addressID);
@@ -19,7 +19,7 @@ export function createOrder(firstName, lastName, addressID) {
 }
 
 // Get all orders
-export function getOrders(token) {
+export function getOrders() {
     return axios({
         url: `${baseUrl}/rest/orders`,
         method: 'get',
@@ -65,7 +65,7 @@ export function cancelOrder(orderId) {
 
 //processPayment
 export function processPayment(orderId,cardNumber,valid_my,cvv) {
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     formData.append('orderId', orderId);
     formData.append('card', cardNumber);
     formData.append('valid_my', valid_my);

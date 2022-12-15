@@ -3,22 +3,20 @@ import "./res/ShoppingCart.css";
 import { Link } from "react-router-dom";
 import { Button, Table } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
+import {deleteCartItem} from "./api/shoppingCartApi";
 
 export default function ShoppingCart(props) {
     // State to store the total price of the items in the shopping cart
     const [totalPrice, setTotalPrice] = useState(0);
-
     // Function to handle the closing of an item in the shopping cart
     const onCloseClick = (id) => {
-        // TODO: Implement this function
         debugger;
+        deleteCartItem(id).then(res=>{
+            console.log(res)
+        }).catch(err=>{
+            console.log(err)
+        })
     };
-
-    // // Function to handle submitting the shopping cart
-    // const onSubmit = () => {
-    //     // TODO: Implement this function
-    //     debugger;
-    // };
 
     // Columns to be displayed in the shopping cart table
     const columns = [
@@ -88,9 +86,12 @@ export default function ShoppingCart(props) {
                     Total(Tax not include): <span className="totalum">${totalPrice}</span>
                 </p>
                 <p className="submit" >
-                    <Link style={{textDecoration: 'none'}} to = "/checkout">
+                    {props.isLogin && <Link style={{textDecoration: 'none'}} to = "/checkout">
                         Check Out
-                    </Link>
+                    </Link>}
+                    {!props.isLogin && <Link  to = "/login">
+                        please login first
+                    </Link>}
                 </p>
             </footer>
         </div>

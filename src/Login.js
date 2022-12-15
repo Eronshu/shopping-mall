@@ -14,6 +14,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {login} from './api'
 import * as React from "react";
+import sha256 from 'js-sha256';
+import { message } from 'antd';
+import { useNavigate, useLocation } from "react-router-dom";
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,23 +32,27 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn(props) {
+    const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // });
         login({
             username: data.get('email'),
-            password: data.get('password'),
+            password: sha256(data.get('password')),
+            // password: data.get('password'),
         }).then(res => {
-           console.log(res)
+            console.log(res)
+            message.success('login success')
+            localStorage.setItem('token', res.data.data.session);
+            localStorage.setItem('user', res.data.data.username);
+            localStorage.setItem('is_admin', res.data.data.is_admin);
             debugger
-            localStorage.setItem('token', res.data.token);
+            props.setIslogin(localStorage.getItem('token'))
+            props.setIsAdmin(res.data.data.is_admin)
+            navigate(`/`);
         }).catch(err => {
-            debugger
+            message.error(err.response.data.msg)
         })
     };
     return (
@@ -100,11 +107,11 @@ export default function SignIn() {
                             Log in
                         </Button>
                         <Grid container>
-                            {/*<Grid item xs>*/}
-                            {/*    <Link href="src/Login#" variant="body2">*/}
-                            {/*        Forgot password?*/}
-                            {/*    </Link>*/}
-                            {/*</Grid>*/}
+                            <Grid item xs>
+                                <Link href="src/Login#" variant="body2">
+                                    Forgot password?
+                                </Link>
+                            </Grid>
                             <Grid item>
                                 <Link href="/register" variant="body2">
                                     Don't have an account? Create an account

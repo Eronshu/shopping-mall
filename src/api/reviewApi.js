@@ -9,12 +9,12 @@ export function getCommentMock() {
 }
 //set review
 export function setReview(itemId, rating,comment) {
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     formData.append('item_id', itemId);
     formData.append('rating', rating);
     formData.append('comment', comment);
     return axios({
-        url: `${baseUrl}/rest//review`,
+        url: `${baseUrl}/rest/review`,
         method: 'post',
         data: formData,
         headers: {
@@ -25,7 +25,7 @@ export function setReview(itemId, rating,comment) {
 //getReview
 export function getReview(itemId) {
     return axios({
-        url: `${baseUrl}/rest//review/${itemId}`,
+        url: `${baseUrl}/rest/review/${itemId}`,
         method: 'get',
     });
 }

@@ -3,7 +3,7 @@ const baseUrl = 'http://localhost:8080/EECS4413Project'
 const token = localStorage.getItem('token');
 
 export function addAddress({ street, province, country, zip, phone }) {
-    const params = new FormData();
+    const params = new URLSearchParams();
     params.append('street', street);
     params.append('province', province);
     params.append('country', country);
@@ -21,7 +21,7 @@ export function addAddress({ street, province, country, zip, phone }) {
 }
 
 export function updateAddress({ address_id, street, province, country, zip, phone }) {
-    const params = new FormData();
+    const params = new URLSearchParams();
     params.append('address_id', address_id);
     params.append('street', street);
     params.append('province', province);

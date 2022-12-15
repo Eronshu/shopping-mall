@@ -25,7 +25,7 @@ export function syncShoppingCart(shoppingCartItems) {
 
 // Update cart item
 export function updateShoppingCartItem(itemId, quantity) {
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     formData.append('item_id', itemId);
     formData.append('quantity', quantity);
 
@@ -52,7 +52,7 @@ export function deleteCartItem(itemId) {
 }
 
 //get all cart items
-export function getAllCartItems(itemId) {
+export function getAllCartItems() {
     return axios({
         url: `${baseUrl}/rest/cart`,
         method: 'get',
@@ -60,18 +60,6 @@ export function getAllCartItems(itemId) {
             'Authorization': token,
         },
     });
-}
-
-
-//curl -X GET -H "Authorization: <TOKEN>" http://localhost:8080/EECS4413Project/rest/cart
-export function getCart() {
-    return axios({
-        url: `${baseUrl}/cart`,
-        method: 'get',
-        // headers: {
-        //     'Authorization': 'x-www-form-urlencoded'
-        // }
-    })
 }
 
 export function getCartMock() {

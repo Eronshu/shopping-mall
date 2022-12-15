@@ -7,14 +7,15 @@ import Login from "./Login";
 import Register from "./Register";
 import ShoppingCart from "./ShoppingCart";
 import {getCartMock} from "./api/shoppingCartApi";
-import AdministratorPage from "./AdminReport";
+import {AdminReport} from "./AdminReport";
 import Checkout from "./Checkout";
 import {ThemeProvider} from "@mui/material/styles";
-import theme from "./theme";
 
 function MainPage() {
     const [data, setData] = useState([]);
-
+    const [isLogin, setIslogin] = useState(localStorage.getItem('token'))
+    // const [isLogin, setIslogin] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(Boolean(eval(localStorage.getItem('is_admin'))))
     // Fetch the cart data on component mount
     useEffect(() => {
         getCartMock().then((res) => {
@@ -24,13 +25,12 @@ function MainPage() {
 
     return (
         <Router>
-            <ThemeProvider theme={theme}>
                 <div>
                     <Routes>
                         <Route
                             exact
                             path="/"
-                            element={<App data={data} setData={setData}/>}
+                            element={<App data={data} setData={setData} isLogin={isLogin} isAdmin={isAdmin}/>}
                         ></Route>
                         <Route
                             path="/details/:id"
@@ -38,15 +38,14 @@ function MainPage() {
                         ></Route>
                         <Route
                             path="/shoppingCart"
-                            element={<ShoppingCart data={data} setData={setData}/>}
+                            element={<ShoppingCart data={data} setData={setData} isLogin={isLogin}/>}
                         ></Route>
-                        <Route path="/login" element={<Login/>}></Route>
+                        <Route path="/login" element={<Login setIslogin={setIslogin} setIsAdmin={setIsAdmin}/>}></Route>
                         <Route path="/register" element={<Register/>}></Route>
-                        <Route path="/adminReport" element={<AdministratorPage/>}></Route>
-                        <Route path="/checkout" element={<Checkout/>}></Route>
+                        <Route path="/adminReport" element={<AdminReport/>}></Route>
+                        <Route path="/checkout" element={<Checkout data={data} setData={setData}/>}></Route>
                     </Routes>
                 </div>
-            </ThemeProvider>
         </Router>
     );
 }

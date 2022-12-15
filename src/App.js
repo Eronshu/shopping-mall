@@ -6,9 +6,9 @@ import Footer from "./components/Footer";
 import React from "react";
 import SideBar from "./SideBar";
 import Item from "./Item";
-import { Pagination } from "antd";
+import {message, Pagination} from "antd";
 import { Link } from "react-router-dom";
-import { getAllItems, getItems, getItemsMock } from "./api";
+import {getAllItems, getItems, getItemsMock, logout} from "./api";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -28,6 +28,20 @@ export default function App(props) {
             setList(res.data.data);
         });
     }, []);
+    const logoutBtn = () => {
+        // debugger
+
+        logout().then(res=>{
+            // props.setIslogin(false)
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('is_admin');
+            message.success('log out success')
+            navigate(`/login`);
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
     return (
         <>
             <div className="center">
@@ -37,14 +51,32 @@ export default function App(props) {
                     </Link>
                 </div>
                 <div>
-                    <ul className="login">
+                    {!props.isLogin && <ul className="login">
                         <li>
                             <Link to="/login">Log In</Link>
                         </li>
                         <li>
                             <Link to="/register">Register</Link>
                         </li>
-                    </ul>
+                    </ul>}
+                    {/*//user */}
+                    {props.isLogin && !props.isAdmin && <ul className="login">
+                        <li>
+                            <a href="javascript:void(0);">welcome</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" onClick={logoutBtn}>log out</a>
+                        </li>
+                    </ul>}
+                    {/*admin*/}
+                    {props.isLogin &&  props.isAdmin && <ul className="login">
+                        <li>
+                            <Link to="/adminReport">report</Link>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" onClick={logoutBtn}>log out</a>
+                        </li>
+                    </ul>}
                 </div>
             </div>
             <div className="main">

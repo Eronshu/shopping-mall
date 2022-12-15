@@ -1,5 +1,4 @@
 import React from 'react'
-// import './res/Header.css'
 import './res/Main.css'
 import Item from "./Item";
 

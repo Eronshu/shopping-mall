@@ -12,8 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {createUser, register} from './api'
-
+import {register} from './api'
+import sha256 from 'js-sha256';
+import {message} from "antd";
+import {useNavigate} from "react-router-dom";
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,43 +31,25 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-// export default function SignUp() {
-//     const handleSubmit = (event) => {
-//         event.preventDefault();
-//         const data = new FormData(event.currentTarget);
-//         // console.log({
-//         //     username: data.get('username'),
-//         //     password: data.get('password'),
-//         // });
-//         // debugger
-//         register({
-//             username: data.get('username'),
-//             password: data.get('password'),
-//         }).then(res => {
-//             console.log(res);
-//         }).catch()
-//     };
 export default function SignUp() {
+    const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
             username: data.get('username'),
-            password: data.get('password'),
+            password: sha256(data.get('password')),
         });
-        // debugger
-        // register(data).then(res => {
-        //     console.log(res);
-        // }).catch()
         register({
             username: data.get('username'),
-            password: data.get('password'),
-        }).then(response => {
-            console.log(response)
+            password: sha256(data.get('password')),
+        }).then(res => {
+            message.success('register success')
+            localStorage.setItem('token', res.data.session);
+            navigate(`/`);
+        }).catch(err=>{
+            message.error(err.response.data.msg)
         })
-            .catch(error => {
-                // Handle any error that occurred in the request
-            });
     };
 
     return (

@@ -1,15 +1,13 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:8080/EECS4413Project'
-const token = localStorage.getItem('token');
 
+const token = localStorage.getItem('token');
 //---------------UserController-----------------------//
 // Login
-// curl -X POST http://localhost:8080/EECS4413Project/rest/users/sign-in  -d 'username=whc&password=ab2afbe27448b79c2d66950ec6a24c5e2efd13db28fc91684ffab8392995334d'
 export function login({ username, password }) {
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     formData.append('username', username);
     formData.append('password', password);
-    console.log(formData)
     return axios({
         url: `${baseUrl}/rest/user/sign-in`,
         method: 'post',
@@ -19,32 +17,20 @@ export function login({ username, password }) {
         }
     })
 }
-
+//register
 export function register({username,password}) {
-    // const formData = new URLSearchParams();
-    // formData.append('username', username);
-    // formData.append('password', password);
-    // console.log(formData)
-    return axios.post('http://localhost:8080/EECS4413Project/rest/user/sign-in', {
-        username: username,
-        password: password,
+    const formData = new URLSearchParams();
+    formData.append('username', username);
+    formData.append('password', password);
+    return axios({
+        url: `${baseUrl}/rest/user`,
+        method: 'post',
+        data: formData,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
     })
-
 }
-// export function register(data) {
-//     // const formData = new URLSearchParams();
-//     // formData.append('username', username);
-//     // formData.append('password', password);
-//     console.log(data)
-//     return axios({
-//         url: `${baseUrl}/rest/user`,
-//         method: 'post',
-//         data: data,
-//         headers: {
-//             'Content-Type': 'multipart/form-data'
-//         }
-//     })
-// }
 
 // Logout
 export function logout() {
@@ -68,7 +54,7 @@ export function getRecoveryQuestion(username) {
 }
 //setRecoveryInfo
 export function setRecoveryInfo(question,answer) {
-    const data = new FormData();
+    const data = new URLSearchParams();
     data.append('question', question);
     data.append('answer',answer)
     return axios({
@@ -82,7 +68,7 @@ export function setRecoveryInfo(question,answer) {
 }
 //changePassword
 export function changePassword(newPassword) {
-    const data = new FormData();
+    const data = new URLSearchParams();
     data.append('new_password', newPassword)
     return axios({
         url: `${baseUrl}/rest/user/change-password`,
@@ -95,7 +81,7 @@ export function changePassword(newPassword) {
 }
 //setRecoveryInfo
 export function recoverPassword(username,answer,new_password) {
-    const data = new FormData();
+    const data = new URLSearchParams();
     data.append('username', username);
     data.append('answer',answer);
     data.append('new_password',new_password)
@@ -191,65 +177,7 @@ export function getItemByIdMock(id) {
         })
     })
 }
-//------------------------------------shoppingCartController-----------------------------------//
-//SHOPPING CART:
-// const shoppingCartItems = [
-//     {item_id: 'XXX', quantity: 0},
-//     {item_id: '051EZXVTANB1QGD4', quantity: 3},
-//     {item_id: '0EIHD7I9TGLOSY6C', quantity: 5}
-// ];
 
-//用户登录后把购物车里的数据传进去，同步购物车
-export function syncShoppingCart(shoppingCartItems) {
-    return axios({
-        url: `${baseUrl}/rest/cart`,
-        method: 'post',
-        data: shoppingCartItems,
-        headers: {
-            Authorization: token,
-            'Content-Type': 'application/json'
-        }
-    });
-}
-
-// Update cart item
-export function updateShoppingCartItem(itemId, quantity) {
-    const formData = new FormData();
-    formData.append('item_id', itemId);
-    formData.append('quantity', quantity);
-
-    return axios({
-        url: `${baseUrl}/rest/cart`,
-        method: 'put',
-        data: formData,
-        headers: {
-            Authorization: token,
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    });
-}
-
-// Delete cart item
-export function deleteCartItem(itemId) {
-    return axios({
-        url: `${baseUrl}/rest/cart/${itemId}`,
-        method: 'delete',
-        headers: {
-            'Authorization': token,
-        },
-    });
-}
-
-//get all cart items
-export function getAllCartItems(itemId) {
-    return axios({
-        url: `${baseUrl}/rest/cart`,
-        method: 'get',
-        headers: {
-            'Authorization': token,
-        },
-    });
-}
 
 // Get all orders
 export function getOrders(token) {
@@ -294,22 +222,5 @@ export function deleteOrder(orderId, token) {
     });
 }
 
-
-//curl -X GET -H "Authorization: <TOKEN>" http://localhost:8080/EECS4413Project/rest/cart
-export function getCart() {
-    return axios({
-        url: `${baseUrl}/cart`,
-        method: 'get',
-        // headers: {
-        //     'Authorization': 'x-www-form-urlencoded'
-        // }
-    })
-}
-export function getCartMock() {
-    return axios({
-        url: `/cart.json`,
-        method: 'get'
-    })
-}
 
 
