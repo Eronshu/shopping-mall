@@ -31,7 +31,7 @@ function Copyright() {
     );
 }
 
-const steps = ['Shipping address','Billing address',  'Payment details', 'Review your order'];
+const steps = ['Shipping address','Billing address', 'Review your order', 'Payment details'];
 
 
 
@@ -67,9 +67,9 @@ export default function Checkout() {
             case 1:
                 return <BillingAddressForm />;
             case 2:
-                return <PaymentForm cardInfo={cardInfo} setCardInfo={setCardInfo}/>;
-            case 3:
                 return <Review cardInfo={cardInfo} setCardInfo={setCardInfo}/>;
+            case 3:
+                return <PaymentForm cardInfo={cardInfo} setCardInfo={setCardInfo}/>;
             default:
                 throw new Error('Unknown step');
         }

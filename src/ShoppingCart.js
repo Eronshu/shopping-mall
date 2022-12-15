@@ -21,9 +21,9 @@ export default function ShoppingCart(props) {
     // Columns to be displayed in the shopping cart table
     const columns = [
         {
-            title: "image",
-            dataIndex: "image",
-            key: "image",
+            title: "name",
+            dataIndex: "name",
+            key: "name",
             render: (image) => <img src={image} className={image} style={{
                 width: 100,
             }}></img>,

@@ -30,9 +30,8 @@ export default function App(props) {
     }, []);
     const logoutBtn = () => {
         // debugger
-
+        console.log(localStorage.getItem('token'))
         logout().then(res=>{
-            // props.setIslogin(false)
             localStorage.removeItem('token');
             localStorage.removeItem('username');
             localStorage.removeItem('is_admin');

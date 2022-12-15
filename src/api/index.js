@@ -26,7 +26,7 @@ export function register({username,password}) {
         url: `${baseUrl}/rest/user`,
         method: 'post',
         data: formData,
-        headers: {
+        s: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     })
@@ -38,7 +38,7 @@ export function logout() {
         url: `${baseUrl}/rest/user/sign-out`,
         method: 'post',
         headers: {
-            'Authorization': token,
+            'Authorization': localStorage.getItem('token')
         },
     });
 }

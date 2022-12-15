@@ -5,6 +5,7 @@ import './res/ItemDetail.css'
 import {Link, useParams} from 'react-router-dom'
 import {getItemByIdMock, getSpecificItem} from './api'
 import {getCommentMock, getReview, setReview} from "./api/reviewApi";
+import {updateShoppingCartItem} from "./api/shoppingCartApi";
 
 export default function ItemDetails(props) {
     const params = useParams()
@@ -32,8 +33,12 @@ export default function ItemDetails(props) {
     }, [])
 
     function addToCart() {
-        debugger
-        props.setData([...props.data, {...itemInfo}])
+
+        const id = params.id;
+        updateShoppingCartItem({itemId:id,quantity:'1'}).then(res=>{
+            console.log(res)
+            debugger
+        })
     }
 
     function handleFormSubmit(event) {
@@ -69,7 +74,11 @@ export default function ItemDetails(props) {
                     <p className='desc'>{itemInfo.description}</p>
                     <p className='price'>${itemInfo.price}</p>
                     <div className='buttonGrop'>
-                        <Button type="primary" size="large" className='button' onClick={addToCart}>Add to Cart</Button>
+                        {props.isLogin && <Button type="primary" size="large" className='button' onClick={addToCart}>Add to Cart</Button>}
+                        {!props.isLogin && <Link  to = "/login">
+                            <Button type="primary" size="large" className='button'>please login first to add the item</Button>
+                        </Link>}
+
                         <Link to="/">
                             <Button type="link">Back to Home Page</Button>
                         </Link>

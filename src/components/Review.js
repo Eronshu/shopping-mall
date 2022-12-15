@@ -9,11 +9,20 @@ import {useEffect, useState} from "react";
 
 export default function Review() {
     const [products, setProducts] = useState([])
+    const [totalPrice, setTotalPrice] = useState(0);
     useEffect(() => {
         getCartMock().then((res) => {
             setProducts(res.data);
         });
+        if (products.length > 0) {
+            let sum = 0;
+            products.forEach(({ price }) => {
+                sum += price;
+            });
+            setTotalPrice(sum);
+        }
     }, []);
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -30,7 +39,7 @@ export default function Review() {
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Total" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        $34.06
+                        ${totalPrice}
                     </Typography>
                 </ListItem>
             </List>

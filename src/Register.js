@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {register} from './api'
+import {register, setRecoveryInfo} from './api'
 import sha256 from 'js-sha256';
 import {message} from "antd";
 import {useNavigate} from "react-router-dom";
@@ -46,9 +46,19 @@ export default function SignUp() {
         }).then(res => {
             message.success('register success')
             localStorage.setItem('token', res.data.session);
-            navigate(`/`);
+            navigate(`/login`);
         }).catch(err=>{
             message.error(err.response.data.msg)
+        });
+        setRecoveryInfo({
+            question: data.get('RecoveryQuestion'),
+            createAnswer: sha256(data.get('RecoveryAnswer'))
+        }).then(res=>{
+            console.log(res)
+            debugger
+        }).catch(err=>{
+            console.log(err)
+            debugger
         })
     };
 
@@ -70,7 +80,7 @@ export default function SignUp() {
                     <Typography component="h1" variant="h5">
                         Register
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 5}}>
                         <Grid item xs={12}>
                             <TextField
                                 margin="normal"
@@ -82,6 +92,7 @@ export default function SignUp() {
                                 // autoComplete="User Name"
                                 autoFocus
                             />
+                            <br/>
                             <Grid item xs={12}>
                                 <TextField
                                     required
@@ -91,6 +102,28 @@ export default function SignUp() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
+                                />
+                            </Grid>
+                            <br/>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="RecoveryQuestion"
+                                    label="RecoveryQuestion"
+                                    type="RecoveryQuestion"
+                                    id="RecoveryQuestion"
+                                />
+                            </Grid>
+                            <br/>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="RecoveryAnswer"
+                                    label="RecoveryAnswer"
+                                    type="RecoveryAnswer"
+                                    id="RecoveryAnswer"
                                 />
                             </Grid>
                             <Grid item xs={12}>

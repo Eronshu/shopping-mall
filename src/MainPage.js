@@ -6,7 +6,7 @@ import ItemDetails from "./ItemDetails";
 import Login from "./Login";
 import Register from "./Register";
 import ShoppingCart from "./ShoppingCart";
-import {getCartMock} from "./api/shoppingCartApi";
+import {getAllCartItems, getCartMock} from "./api/shoppingCartApi";
 import {AdminReport} from "./AdminReport";
 import Checkout from "./Checkout";
 import {ThemeProvider} from "@mui/material/styles";
@@ -18,8 +18,8 @@ function MainPage() {
     const [isAdmin, setIsAdmin] = useState(Boolean(eval(localStorage.getItem('is_admin'))))
     // Fetch the cart data on component mount
     useEffect(() => {
-        getCartMock().then((res) => {
-            setData(res.data);
+        getAllCartItems().then((res) => {
+            setData(res.data.data);
         });
     }, []);
 
@@ -34,7 +34,7 @@ function MainPage() {
                         ></Route>
                         <Route
                             path="/details/:id"
-                            element={<ItemDetails data={data} setData={setData}/>}
+                            element={<ItemDetails data={data} setData={setData} isLogin={isLogin}/>}
                         ></Route>
                         <Route
                             path="/shoppingCart"
@@ -43,7 +43,7 @@ function MainPage() {
                         <Route path="/login" element={<Login setIslogin={setIslogin} setIsAdmin={setIsAdmin}/>}></Route>
                         <Route path="/register" element={<Register/>}></Route>
                         <Route path="/adminReport" element={<AdminReport/>}></Route>
-                        <Route path="/checkout" element={<Checkout data={data} setData={setData}/>}></Route>
+                        <Route path="/checkout" element={<Checkout data={data}/>}></Route>
                     </Routes>
                 </div>
         </Router>
