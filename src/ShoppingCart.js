@@ -31,7 +31,7 @@ export default function ShoppingCart(props) {
       key: "item_id",
       render: (image) => (
         <img
-          src={image}
+          src={`https://eecs4413groupg.cf/images/${image}.jpg`}
           className={image}
           style={{
             width: 100,
