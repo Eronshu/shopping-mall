@@ -25,7 +25,7 @@ export function syncShoppingCart(shoppingCartItems) {
 }
 
 // Update cart item
-export function updateShoppingCartItem({ itemId, quantity }) {
+export function updateShoppingCartItem(itemId, quantity) {
   const token = localStorage.getItem("token");
 
   const formData = new URLSearchParams();

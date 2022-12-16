@@ -43,7 +43,7 @@ const Header = (props) => {
         {props.isLogin && !props.isAdmin && (
           <ul className="login">
             <li>
-              <a href="#">welcome</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <a href="#" onClick={logoutBtn}>
