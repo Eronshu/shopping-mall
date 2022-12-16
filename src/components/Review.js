@@ -13,8 +13,8 @@ export default function Review({ cart }) {
   useEffect(() => {
     if (cart.length > 0) {
       let sum = 0;
-      cart.forEach(({ price }) => {
-        sum += price;
+      cart.forEach(({ price, quantity }) => {
+        sum += price*quantity;
       });
       setTotalPrice(sum);
     }
@@ -29,7 +29,7 @@ export default function Review({ cart }) {
         {products.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
             <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+            <Typography variant="body2">{Math.round(100*product.price*product.quantity)/100}</Typography>
           </ListItem>
         ))}
 
