@@ -7,11 +7,11 @@ import {deleteCartItem} from "./api/shoppingCartApi";
 
 export default function ShoppingCart(props) {
 
-    const onCloseClick = (id) => {
+    const onCloseClick = (item_id) => {
         console.log(props.data)
-        console.log(id)
+        console.log(item_id)
         debugger;
-        deleteCartItem(id).then(res=>{
+        deleteCartItem(item_id).then(res=>{
             console.log(res)
             debugger
         }).catch(err=>{
@@ -80,7 +80,7 @@ export default function ShoppingCart(props) {
             <footer className="CartFooter">
                 <Link to="/">Continue shopping</Link>
                 <p className="totalMoney">
-                {/*    Total(Tax not include): <span className="totalum">${totalPrice}</span>*/}
+                    {/*    Total(Tax not include): <span className="totalum">${totalPrice}</span>*/}
                 </p>
                 <p className="submit" >
                     {props.isLogin && <Link style={{textDecoration: 'none'}} to = "/checkout">

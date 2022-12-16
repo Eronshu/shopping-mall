@@ -32,7 +32,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn(props) {
+export default function ResetPassword(props) {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -108,14 +108,12 @@ export default function SignIn(props) {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="src/Login#" variant="body2">
+                                <Link href="/resetPassword" variant="body2">
                                     Forgot password?
                                 </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="/register" variant="body2">
-                                    Don't have an account? Create an account
-                                </Link>
+                                {/*<Link href="/RecoveryQuestion" variant="body2">*/}
+                                {/*    Set your Recovery Question*/}
+                                {/*</Link>*/}
                             </Grid>
                         </Grid>
                     </Box>

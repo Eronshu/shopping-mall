@@ -65,7 +65,7 @@ function MainPage() {
                     <Route path="/adminReport" element={<AdminReport/>}></Route>
                     <Route path="/checkout" element={<Checkout data={data}/>}></Route>
                     <Route path="/RecoveryQuestion" element={<RecoveryQuestion/>}></Route>
-                    <Route path="/resetPassword" element={<ResetPassword/>}></Route>
+                    <Route path="/resetPassword" element={<ResetPassword isLogin={isLogin}/>}></Route>
                 </Routes>
             </div>
         </Router>

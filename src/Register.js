@@ -16,6 +16,7 @@ import {register, setRecoveryInfo} from './api'
 import sha256 from 'js-sha256';
 import {message} from "antd";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -33,13 +34,10 @@ const theme = createTheme();
 
 export default function SignUp() {
     const navigate = useNavigate();
+    const [RecoveryQuestion,setRecoveryQuestion] = useState('');
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            username: data.get('username'),
-            password: sha256(data.get('password')),
-        });
         register({
             username: data.get('username'),
             password: sha256(data.get('password')),
@@ -50,17 +48,9 @@ export default function SignUp() {
         }).catch(err=>{
             message.error(err.response.data.msg)
         });
-        setRecoveryInfo({
-            question: data.get('RecoveryQuestion'),
-            createAnswer: sha256(data.get('RecoveryAnswer'))
-        }).then(res=>{
-            console.log(res)
-            debugger
-        }).catch(err=>{
-            console.log(err)
-            debugger
-        })
+
     };
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -104,28 +94,6 @@ export default function SignUp() {
                                     autoComplete="new-password"
                                 />
                             </Grid>
-                            <br/>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    name="RecoveryQuestion"
-                                    label="RecoveryQuestion"
-                                    type="RecoveryQuestion"
-                                    id="RecoveryQuestion"
-                                />
-                            </Grid>
-                            <br/>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    name="RecoveryAnswer"
-                                    label="RecoveryAnswer"
-                                    type="RecoveryAnswer"
-                                    id="RecoveryAnswer"
-                                />
-                            </Grid>
                             <Grid item xs={12}>
                                 <FormControlLabel
                                     control={<Checkbox value="allowExtraEmails" color="primary"/>}
@@ -139,12 +107,19 @@ export default function SignUp() {
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
-                            Sign Up
+                            Register
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link href="/login" variant="body2">
                                     Already have an account? Sign in
+                                </Link>
+                            </Grid>
+                        </Grid>
+                        <Grid container justifyContent="flex-end">
+                            <Grid item>
+                                <Link href="/RecoveryQuestion" variant="body2">
+                                    Set your Recovery Question
                                 </Link>
                             </Grid>
                         </Grid>

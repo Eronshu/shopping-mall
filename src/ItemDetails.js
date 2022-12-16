@@ -9,6 +9,7 @@ import {updateShoppingCartItem} from "./api/shoppingCartApi";
 
 export default function ItemDetails(props) {
     const params = useParams()
+    const [value, setValue] = useState(1);
     const [itemInfo, setItemInfo] = useState({
         image: '',
         name: '',
@@ -21,11 +22,9 @@ export default function ItemDetails(props) {
 
     useEffect(() => {
         getSpecificItem(params.id).then(res => {
-            console.log(res.data)
             setItemInfo(res.data.data)
         })
         getReview(params.id).then(res => {
-            console.log(res)
             setComment(res.data.data)
         }).catch(err => {
             console.log(err.response.data)
@@ -36,9 +35,12 @@ export default function ItemDetails(props) {
         // console.log(params.id)
         // // debugger
         const id =params.id;
-        updateShoppingCartItem(id,1).then(res=>{
+        updateShoppingCartItem(id,value).then(res=>{
             console.log(res)
-            debugger
+            // debugger
+            message.success("add success")
+        }).catch(err=>{
+            message.error("something wrong here")
         })
     }
 
@@ -75,6 +77,12 @@ export default function ItemDetails(props) {
                     <p className='desc'>{itemInfo.description}</p>
                     <p className='price'>${itemInfo.price}</p>
                     <div className='buttonGrop'>
+                        <div>
+                            <button onClick={() => setValue(value + 1)}>+</button>
+                            <input type="number" value={value} min={1} readOnly />
+                            {/* 当value大于等于1时才能减少 */}
+                            <button onClick={() => value >= 1 && setValue(value - 1)}>-</button>
+                        </div>
                         {props.isLogin && <Button type="primary" size="large" className='button' onClick={addToCart}>Add to Cart</Button>}
                         {!props.isLogin && <Link  to = "/login">
                             <Button type="primary" size="large" className='button'>please login first to add the item</Button>
