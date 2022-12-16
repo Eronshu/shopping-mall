@@ -11,16 +11,7 @@ import { useEffect, useState } from "react";
 import { getAddressById, getAllAddressesFromUser } from "../api/addressApi";
 
 export default function AddressForm({ data, setData, isSkip, setIsSkip }) {
-  useEffect(() => {
-    getAddressById(1)
-      .then((res) => {
-        console.log(res);
-        debugger;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -127,19 +118,6 @@ export default function AddressForm({ data, setData, isSkip, setIsSkip }) {
             variant="standard"
             value={data.phone}
             onChange={(e) => setData({ ...data, phone: e.target.value })}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="secondary"
-                name="saveAddress"
-                checked={isSkip}
-                onChange={(e) => setIsSkip(e.target.checked)}
-              />
-            }
-            label="Use this address for billing address"
           />
         </Grid>
       </Grid>

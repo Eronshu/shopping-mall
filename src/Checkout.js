@@ -17,6 +17,8 @@ import PaymentForm from "./components/PaymentForm";
 import Review from "./components/Review";
 import BillingAddressForm from "./components/BillingAddressForm";
 import { useState } from "react";
+import { addAddress } from "./api/addressApi";
+import { createOrder, processPayment } from "./api/orderApi";
 
 function Copyright() {
   return (
@@ -31,12 +33,7 @@ function Copyright() {
   );
 }
 
-const steps = [
-  "Shipping address",
-  "Billing address",
-  "Review your order",
-  "Payment details",
-];
+const steps = ["Shipping address", "Review your order", "Payment details"];
 
 const theme = createTheme();
 
@@ -64,23 +61,23 @@ export default function Checkout(props) {
     expDate: "",
     cvv: "",
   });
-  const processCheckout = () => {
-    console.log(
-      "🚀 ~ file: Checkout.js:65 ~ processCheckout ~ checkoutData",
-      checkoutData
+  const processCheckout = async () => {
+    const addressID = await addAddress(checkoutData);
+    const orderID = await createOrder(
+      checkoutData.firstName,
+      checkoutData.lastName,
+      addressID
     );
-
-    console.log(
-      "🚀 ~ file: Checkout.js:66 ~ processCheckout ~ cardInfo",
-      cardInfo
+    return processPayment(
+      orderID,
+      cardInfo.cardNumber,
+      cardInfo.expDate,
+      cardInfo.cvv
     );
-    // addAddress
-    // createOrder
-    // processPayment
   };
 
   const handleNext = () => {
-    if (activeStep < 3) {
+    if (activeStep < 2) {
       setActiveStep(activeStep + 1);
     } else {
       processCheckout();
@@ -109,12 +106,8 @@ export default function Checkout(props) {
           />
         );
       case 1:
-        return (
-          <BillingAddressForm data={checkoutData} setData={setCheckoutData} />
-        );
-      case 2:
         return <Review cart={props.data} />;
-      case 3:
+      case 2:
         return <PaymentForm cardInfo={cardInfo} setCardInfo={setCardInfo} />;
       default:
         throw new Error("Unknown step");

@@ -11,17 +11,13 @@ export default function Review({ cart }) {
   const [products, setProducts] = useState(cart);
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
-    getCartMock().then((res) => {
-      setProducts(res.data);
-
-      if (res.data.length > 0) {
-        let sum = 0;
-        res.data.forEach(({ price }) => {
-          sum += price;
-        });
-        setTotalPrice(sum);
-      }
-    });
+    if (cart.length > 0) {
+      let sum = 0;
+      cart.forEach(({ price }) => {
+        sum += price;
+      });
+      setTotalPrice(sum);
+    }
   }, []);
 
   return (

@@ -1,25 +1,30 @@
 import axios from "axios";
 const baseUrl = 'http://localhost:8080/EECS4413Project'
-const token = localStorage.getItem('token');
 
 // Create order
-export function createOrder(firstName, lastName, addressID) {
+export async function createOrder(firstName, lastName, addressID) {
+    const token = localStorage.getItem('token');
+
     const formData = new URLSearchParams();
-    formData.append('firstName', firstName);
-    formData.append('lastName', lastName);
-    formData.append('addressID', addressID);
-    return axios({
+    formData.append('first_name', firstName);
+    formData.append('last_name', lastName);
+    formData.append('address_id', addressID);
+    const res = await axios({
         url: `${baseUrl}/rest/order`,
         method: 'post',
         data:formData,
         headers: {
             'Authorization': token,
+            "Content-Type": "application/x-www-form-urlencoded",
         },
     });
+    return res.data.data.order_id;
 }
 
 // Get all orders
 export function getOrders() {
+    const token = localStorage.getItem('token');
+
     return axios({
         url: `${baseUrl}/rest/orders`,
         method: 'get',
@@ -31,6 +36,8 @@ export function getOrders() {
 
 // Get order by id
 export function getOrderById(orderId) {
+    const token = localStorage.getItem('token');
+
     return axios({
         url: `${baseUrl}/rest/orders/${orderId}`,
         method: 'get',
@@ -43,6 +50,8 @@ export function getOrderById(orderId) {
 //get all orders by user
 // Get order by id
 export function getAllOrders() {
+    const token = localStorage.getItem('token');
+
     return axios({
         url: `${baseUrl}/rest/orders`,
         method: 'get',
@@ -54,19 +63,24 @@ export function getAllOrders() {
 
 // cancel order
 export function cancelOrder(orderId) {
+    const token = localStorage.getItem('token');
+
     return axios({
         url: `${baseUrl}/rest/orders/${orderId}`,
         method: 'delete',
         headers: {
             'Authorization': token,
+            "Content-Type": "application/x-www-form-urlencoded",
         },
     });
 }
 
 //processPayment
 export function processPayment(orderId,cardNumber,valid_my,cvv) {
+    const token = localStorage.getItem('token');
+
     const formData = new URLSearchParams();
-    formData.append('orderId', orderId);
+    formData.append('order_id', orderId);
     formData.append('card', cardNumber);
     formData.append('valid_my', valid_my);
     formData.append('cvv', cvv);
@@ -76,6 +90,7 @@ export function processPayment(orderId,cardNumber,valid_my,cvv) {
         data:formData,
         headers: {
             'Authorization': token,
+            "Content-Type": "application/x-www-form-urlencoded",
         },
     });
 }
