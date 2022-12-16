@@ -42,6 +42,7 @@ export default function App(props) {
                   itemName={itemObj.name}
                   itemImg={itemObj.image}
                   itemPrice={itemObj.price}
+                  itemID={itemObj.id}
                 />
               </Link>
             ))}

@@ -79,7 +79,7 @@ export default function ItemDetails(props) {
     <div className="root">
       <Row className="container">
         <Col span={12} className="[all_height, left_page]">
-          <img src={itemInfo.image} className="info_image"></img>
+          <img src={`https://eecs4413groupg.cf/images/${itemInfo.id}.jpg`} className="info_image"></img>
         </Col>
         <Col span={12} className="all_height">
           <h3 className="title">{itemInfo.name}</h3>
