@@ -13,9 +13,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function App(props) {
-<<<<<<< HEAD
-    // const [shopList, setShopList] = useState([]);
-    const [list, setList] = useState([]);
+        // const [shopList, setShopList] = useState([]);
+        const [list, setList] = useState([]);
     const [page, setPage] = useState(1);
     const pageSize = 12;
     const navigate = useNavigate();
@@ -109,68 +108,5 @@ export default function App(props) {
             </div>
         </>
     );
-=======
-  // const [shopList, setShopList] = useState([]);
-  const [list, setList] = useState([]);
-  const [page, setPage] = useState(1);
-  const pageSize = 12;
-  const navigate = useNavigate();
-  const jumpToItem = (id) => {
-    console.log(`/details/${id}`);
-    debugger;
-    navigate(`/details/${id}`);
-  };
-  useEffect(() => {
-    getAllItems().then((res) => {
-      setList(res.data.data);
-    });
-  }, []);
-  const logoutBtn = () => {
-    // debugger
-    console.log(localStorage.getItem("token"));
-    logout()
-      .then((res) => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
-        localStorage.removeItem("is_admin");
-        message.success("log out success");
-        navigate(`/login`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  return (
-    <>
-      <div className="main">
-        <SideBar setData={props.setData} setList={setList} />
-        <div className="container">
-          {list
-            .slice(page * pageSize - pageSize, page * pageSize)
-            .map((itemObj, idx) => (
-              <Link to={`/details/${itemObj.id}`} key={itemObj.id}>
-                <Item
-                  itemName={itemObj.name}
-                  itemImg={itemObj.image}
-                  itemPrice={itemObj.price}
-                />
-              </Link>
-            ))}
-        </div>
-      </div>
-      <footer className={page}>
-        <Pagination
-          defaultCurrent={1}
-          current={page}
-          total={list.length}
-          onChange={(newPage) => setPage(newPage)}
-        ></Pagination>
-      </footer>
-      {/*<CommentList />*/}
-      <div className="footer">
-        <Footer />
-      </div>
-    </>
-  );
->>>>>>> 5c30a334f48411ad6cfe1db4b14c72a9ffc0b8ca
+
 }

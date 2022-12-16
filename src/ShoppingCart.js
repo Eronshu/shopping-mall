@@ -6,13 +6,14 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import {deleteCartItem} from "./api/shoppingCartApi";
 
 export default function ShoppingCart(props) {
-    // State to store the total price of the items in the shopping cart
-    const [totalPrice, setTotalPrice] = useState(0);
-    // Function to handle the closing of an item in the shopping cart
+
     const onCloseClick = (id) => {
+        console.log(props.data)
+        console.log(id)
         debugger;
         deleteCartItem(id).then(res=>{
             console.log(res)
+            debugger
         }).catch(err=>{
             console.log(err)
         })
@@ -21,34 +22,30 @@ export default function ShoppingCart(props) {
     // Columns to be displayed in the shopping cart table
     const columns = [
         {
-            title: "name",
-            dataIndex: "name",
-            key: "name",
-            render: (image) => <img src={image} className={image} style={{
-                width: 100,
-            }}></img>,
+            title: "item_id",
+            dataIndex: "item_id",
+            key: "item_id",
+            render: (_,{item_id}) => <p>{item_id}</p>
+
         },
         {
-            title: "amount",
-            dataIndex: "number",
+            title: "quantity",
+            dataIndex: "quantity",
             key: "number",
-        },
-        {
-            title: "subtotal",
-            dataIndex: "total",
-            key: "total",
+            render: (_,{quantity}) => <p>{quantity}</p>
+
         },
         {
             title: "remove",
             dataIndex: "operation",
             key: "operation",
-            render: (_, { id }) => (
+            render: (_, { item_id }) => (
                 <Button
                     type="primary"
-                    key={id}
-                    onClick={() => onCloseClick(id)}
+                    key={item_id}
+                    onClick={() => onCloseClick(item_id)}
                 >
-                    <CloseCircleFilled key={id} />
+                    <CloseCircleFilled key={item_id} />
                     delete
                 </Button>
             ),
@@ -56,16 +53,16 @@ export default function ShoppingCart(props) {
     ];
 
     // Update the total price whenever the data in the shopping cart changes
-    useEffect(() => {
-        if (props.data.length > 0) {
-            let sum = 0;
-            props.data.forEach(({ price }) => {
-                sum += price;
-            });
-            // Update the total price
-            setTotalPrice(sum);
-        }
-    }, [props.data]);
+    // useEffect(() => {
+    //     if (props.data.length > 0) {
+    //         let sum = 0;
+    //         props.data.forEach(({ price }) => {
+    //             sum += price;
+    //         });
+    //         // Update the total price
+    //         setTotalPrice(sum);
+    //     }
+    // }, [props.data]);
 
     return (
         <div className="CartRoot">
@@ -83,7 +80,7 @@ export default function ShoppingCart(props) {
             <footer className="CartFooter">
                 <Link to="/">Continue shopping</Link>
                 <p className="totalMoney">
-                    Total(Tax not include): <span className="totalum">${totalPrice}</span>
+                {/*    Total(Tax not include): <span className="totalum">${totalPrice}</span>*/}
                 </p>
                 <p className="submit" >
                     {props.isLogin && <Link style={{textDecoration: 'none'}} to = "/checkout">
