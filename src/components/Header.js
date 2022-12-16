@@ -17,6 +17,7 @@ const Header = (props) => {
         localStorage.removeItem("username");
         localStorage.removeItem("is_admin");
         message.success("log out success");
+        props.setIslogin(false);
         navigate(`/login`);
       })
       .catch((err) => {
