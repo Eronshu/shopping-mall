@@ -1,7 +1,6 @@
 import axios from "axios";
 const baseUrl = "http://localhost:8080/EECS4413Project";
 
-const token = localStorage.getItem("token");
 //---------------UserController-----------------------//
 // Login
 export function login({ username, password }) {
@@ -34,9 +33,13 @@ export function register({ username, password }) {
 
 // Logout
 export function logout() {
+  const token = localStorage.getItem("token");
+
+  const formData = new URLSearchParams();
   return axios({
     url: `${baseUrl}/rest/user/sign-out`,
     method: "post",
+    data: formData,
     headers: {
       Authorization: token,
       "Content-Type": "application/x-www-form-urlencoded",
@@ -55,6 +58,8 @@ export function getRecoveryQuestion(username) {
 }
 //setRecoveryInfo
 export function setRecoveryInfo(question, answer) {
+  const token = localStorage.getItem("token");
+
   const data = new URLSearchParams();
   data.append("question", question);
   data.append("answer", answer);
@@ -69,6 +74,8 @@ export function setRecoveryInfo(question, answer) {
 }
 //changePassword
 export function changePassword(newPassword) {
+  const token = localStorage.getItem("token");
+
   const data = new URLSearchParams();
   data.append("new_password", newPassword);
   return axios({
@@ -82,6 +89,8 @@ export function changePassword(newPassword) {
 }
 //setRecoveryInfo
 export function recoverPassword(username, answer, new_password) {
+  const token = localStorage.getItem("token");
+
   const data = new URLSearchParams();
   data.append("username", username);
   data.append("answer", answer);
