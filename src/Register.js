@@ -116,13 +116,13 @@ export default function SignUp() {
                                 </Link>
                             </Grid>
                         </Grid>
-                        <Grid container justifyContent="flex-end">
-                            <Grid item>
-                                <Link href="/RecoveryQuestion" variant="body2">
-                                    Set your Recovery Question
-                                </Link>
-                            </Grid>
-                        </Grid>
+                        {/*<Grid container justifyContent="flex-end">*/}
+                        {/*    <Grid item>*/}
+                        {/*        <Link href="/RecoveryQuestion" variant="body2">*/}
+                        {/*            Set your Recovery Question*/}
+                        {/*        </Link>*/}
+                        {/*    </Grid>*/}
+                        {/*</Grid>*/}
                     </Box>
                 </Box>
                 <Copyright sx={{mt: 5}}/>

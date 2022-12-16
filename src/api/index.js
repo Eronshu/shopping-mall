@@ -48,12 +48,9 @@ export function logout() {
 }
 //getRecoveryQuestion
 export function getRecoveryQuestion(username) {
-  const data = new URLSearchParams();
-  data.append("username", username);
   return axios({
-    url: `${baseUrl}/rest/user/recover`,
+    url: `${baseUrl}/rest/user/recover?username=${username}`,
     method: "get",
-    data: data,
   });
 }
 //setRecoveryInfo
@@ -89,8 +86,6 @@ export function changePassword(newPassword) {
 }
 //setRecoveryInfo
 export function recoverPassword(username, answer, new_password) {
-  const token = localStorage.getItem("token");
-
   const data = new URLSearchParams();
   data.append("username", username);
   data.append("answer", answer);
@@ -99,9 +94,6 @@ export function recoverPassword(username, answer, new_password) {
     url: `${baseUrl}/rest/user/recover-password`,
     method: "post",
     data: data,
-    headers: {
-      Authorization: token,
-    },
   });
 }
 
@@ -187,16 +179,16 @@ export function getItemByIdMock(id) {
   });
 }
 
-// Get all orders
-export function getOrders(token) {
-  return axios({
-    url: `${baseUrl}/rest/orders`,
-    method: "get",
-    headers: {
-      Authorization: token,
-    },
-  });
-}
+// // Get all orders
+// export function getOrders(token) {
+//   return axios({
+//     url: `${baseUrl}/rest/orders`,
+//     method: "get",
+//     headers: {
+//       Authorization: token,
+//     },
+//   });
+// }
 
 // Get order by id
 export function getOrderById(orderId, token) {

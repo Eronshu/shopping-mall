@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import {setRecoveryInfo} from "./api";
+import {changePassword, getRecoveryQuestion, recoverPassword, setRecoveryInfo} from "./api";
 import sha256 from "js-sha256";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {message} from "antd";
@@ -16,20 +16,60 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 
-
 const theme = createTheme();
-export default function ResetPassword() {
+export default function ResetPassword(props) {
+    const [recoveryQuestion, setRecoveryQuestion] = useState('');
+    const [username, setUsername] = useState('');
+    const [answer, setAnswer] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [showAnswerFields, setShowAnswerFields] = useState(false);
+
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value);
+    };
+
+    const handleAnswerChange = (event) => {
+        setAnswer(event.target.value);
+    };
+
+    const handleNewPasswordChange = (event) => {
+        setNewPassword(event.target.value);
+    };
     const navigate = useNavigate();
-    const [question, setQuestion] = useState('');
-    const handleSubmit = (event) => {
+
+    const handleGetRecoveryQuestion = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        debugger
-        setRecoveryInfo(question, sha256(data.get('RecoveryAnswer'))).then(res => {
-            message.success("set recovery question success")
-            navigate('/')
-        }).catch(err => {
-            message.error(err.response.msg)
+        const token = localStorage.getItem('token');
+        getRecoveryQuestion(username).then(res => {
+            setRecoveryQuestion(res.data.data.question);
+            setShowAnswerFields(true);
+        }).catch(error => {
+            console.error(error);
+            debugger
+            message.error(error)
+        })
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        recoverPassword(username, sha256(answer), sha256(newPassword)).then(res => {
+            console.log(res)
+            message.success('Password successfully reset!');
+            navigate('/login')
+        }).catch(error => {
+            message.error('Error resetting password');
+        })
+    };
+
+    const handleLoginChangePassword= async (event) => {
+        event.preventDefault();
+        changePassword(sha256(newPassword)).then(res => {
+            console.log(res)
+            debugger
+            message.success('Password successfully reset!');
+            navigate('/login')
+        }).catch(error => {
+            message.error('Error resetting password');
         })
     };
     return (
@@ -48,45 +88,92 @@ export default function ResetPassword() {
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Set Recovery Question
+                        Reset Password
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 5}}>
-                        <Grid item xs={12}>
-                            <label htmlFor="RecoveryQuestion">Recovery Question:</label>
-                            <select id="RecoveryQuestion" value={question}
-                                    onChange={e => setQuestion(e.target.value)}>
-                                <option value="What is your mother's maiden name?">What is your mother's maiden name?
-                                </option>
-                                <option value="What was the name of your first pet?">What was the name of your first pet?
-                                </option>
-                                <option value="What was the name of your first school?">What was the name of your first
-                                    school?
-                                </option>
-                            </select>
-
-                            <br/>
-                            <br/>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
+                    {!props.isLogin && <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 5}}>
+                        {!showAnswerFields && <Grid item xs={12}>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="Username"
+                                label="username"
+                                name="username"
+                                autoFocus
+                                value={username}
+                                onChange={handleUsernameChange}
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{mt: 3, mb: 2}}
+                                onClick={handleGetRecoveryQuestion}
+                            >
+                                get my recovery question
+                            </Button>
+                        </Grid>}
+                        {showAnswerFields && (
+                            <>
+                                <p>Your Recovery question: <br/><br/>{recoveryQuestion}</p>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="answer"
+                                        label="question answer"
+                                        id="answer"
+                                        value={answer}
+                                        onChange={handleAnswerChange}
+                                    />
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="new_password"
+                                        label="your new password"
+                                        id="new_password"
+                                        type="password"
+                                        value={newPassword}
+                                        onChange={handleNewPasswordChange}
+                                    />
+                                </Grid>
+                                <Button
+                                    type="submit"
                                     fullWidth
-                                    name="RecoveryAnswer"
-                                    label="RecoveryAnswer"
-                                    type="RecoveryAnswer"
-                                    id="RecoveryAnswer"
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{mt: 3, mb: 2}}
-                        >
-                            Sign Up
-                        </Button>
-                    </Box>
+                                    variant="contained"
+                                    sx={{mt: 3, mb: 2}}
+                                    onClick={handleSubmit}
+                                >
+                                    Reset Password
+                                </Button>
+                            </>)}
+                    </Box>}
+                    {props.isLogin && <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 5}}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="new_password"
+                                        label="your new password"
+                                        id="new_password"
+                                        type="password"
+                                        value={newPassword}
+                                        onChange={handleNewPasswordChange}
+                                    />
+                                </Grid>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{mt: 3, mb: 2}}
+                                    onClick={handleLoginChangePassword}
+                                >
+                                    Reset Password
+                                </Button>
+                    </Box>}
                 </Box>
             </Container>
         </ThemeProvider>

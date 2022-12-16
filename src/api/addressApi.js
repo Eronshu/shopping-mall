@@ -43,18 +43,6 @@ export function updateAddress({ address_id, street, province, country, zip, phon
     })
 }
 
-export function deleteAddress(address_id) {
-    const token = localStorage.getItem('token');
-
-    return axios({
-        url: `${baseUrl}/rest/address/${address_id}`,
-        method: 'delete',
-        headers: {
-            'Authorization': token
-        }
-    })
-}
-
 export function getAddressById(address_id) {
     const token = localStorage.getItem('token');
 
