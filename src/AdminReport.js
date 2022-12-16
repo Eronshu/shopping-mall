@@ -6,17 +6,18 @@ import {Button, message, Table} from "antd";
 
 export function AdminReport() {
     const [data, setData] = useState([]);
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState('');
+    const [month, setMonth] = useState('12');
+    const [year, setYear] = useState('2022');
     const [data2, setData2] = useState([]);
 
-    const [fromMonth, setFromMonth] = useState('');
-    const [fromYear, setFromYear] = useState('');
-    const [toMonth, setToMonth] = useState('');
-    const [toYear, setToYear] = useState('');
-    const [type, setType] = useState('');
+    const [fromMonth, setFromMonth] = useState('10');
+    const [fromYear, setFromYear] = useState('2022');
+    const [toMonth, setToMonth] = useState('12');
+    const [toYear, setToYear] = useState('2022');
+    const [type, setType] = useState('View Item');
 
     function getOrderReport() {
+        console.log()
         getOrders(month, year)
             .then(res => {
                     setData(res.data.data)
