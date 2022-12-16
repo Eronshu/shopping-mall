@@ -25,21 +25,6 @@ export function syncShoppingCart(shoppingCartItems) {
 }
 
 // Update cart item
-<<<<<<< HEAD
-export function updateShoppingCartItem(itemId, quantity) {
-    const formData = new URLSearchParams();
-    formData.append('item_id', itemId);
-    formData.append('quantity', quantity);
-    return axios({
-        url: `${baseUrl}/rest/cart`,
-        method: 'put',
-        data: formData,
-        headers: {
-            Authorization: token,
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    });
-=======
 export function updateShoppingCartItem({ itemId, quantity }) {
   const token = localStorage.getItem("token");
 
@@ -56,7 +41,6 @@ export function updateShoppingCartItem({ itemId, quantity }) {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   });
->>>>>>> 5c30a334f48411ad6cfe1db4b14c72a9ffc0b8ca
 }
 
 // Delete cart item

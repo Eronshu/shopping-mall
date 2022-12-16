@@ -29,7 +29,7 @@ function MainPage() {
   return (
     <Router>
       <div>
-        <Header data={data} />
+        <Header data={data} isLogin={isLogin} isAdmin={isAdmin} />
 
         <Routes>
           <Route
