@@ -1,4 +1,5 @@
 import * as React from "react";
+import { message } from "antd";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -38,8 +39,8 @@ const steps = ["Shipping address", "Review your order", "Payment details"];
 const theme = createTheme();
 
 export default function Checkout(props) {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [checkoutData, setCheckoutData] = React.useState({
+  const [activeStep, setActiveStep] = useState(0);
+  const [checkoutData, setCheckoutData] = useState({
     firstName: "",
     lastName: "",
     street: "",
@@ -61,6 +62,10 @@ export default function Checkout(props) {
     expDate: "",
     cvv: "",
   });
+
+  const [addressID, setAddressID] = useState("");
+  const [orderID, setOrderID] = useState("");
+
   const processCheckout = async () => {
     const addressID = await addAddress(checkoutData);
     const orderID = await createOrder(
@@ -76,11 +81,40 @@ export default function Checkout(props) {
     );
   };
 
-  const handleNext = () => {
-    if (activeStep < 2) {
+  const handleNext = async () => {
+    try {
+      switch (activeStep) {
+        case 0:
+          const aID = await addAddress(checkoutData);
+          setAddressID(aID);
+          debugger;
+          break;
+        case 1:
+          const oID = await createOrder(
+            checkoutData.firstName,
+            checkoutData.lastName,
+            addressID
+          );
+          setOrderID(oID);
+          debugger;
+
+          break;
+        case 2:
+          await processPayment(
+            orderID,
+            cardInfo.cardNumber,
+            cardInfo.expDate,
+            cardInfo.cvv
+          );
+          props.setData([]);
+          debugger;
+
+          break;
+        default:
+      }
       setActiveStep(activeStep + 1);
-    } else {
-      processCheckout();
+    } catch (err) {
+      message.error(err.response.data.msg);
     }
   };
 
@@ -153,7 +187,7 @@ export default function Checkout(props) {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
+                Your order number is #{orderID}. We have emailed your order
                 confirmation, and will send you an update when your order has
                 shipped.
               </Typography>

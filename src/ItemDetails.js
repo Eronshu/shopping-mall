@@ -58,7 +58,7 @@ export default function ItemDetails(props) {
           newList.splice(existingIndex,1,{...existingItem, quantity: totalQuantity});
           props.setData(newList);
         }else{
-          const newList = props.data.concat({...itemInfo, quantity: value});
+          const newList = props.data.concat({...itemInfo, quantity: value, item_id:itemInfo.id});
           props.setData(newList);
         }
         debugger;

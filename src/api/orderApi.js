@@ -85,7 +85,7 @@ export function processPayment(orderId,cardNumber,valid_my,cvv) {
     formData.append('valid_my', valid_my);
     formData.append('cvv', cvv);
     return axios({
-        url: `${baseUrl}/rest/orders/pay`,
+        url: `${baseUrl}/rest/order/pay`,
         method: 'post',
         data:formData,
         headers: {
