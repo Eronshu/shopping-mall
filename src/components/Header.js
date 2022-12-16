@@ -11,13 +11,14 @@ const Header = (props) => {
   const logoutBtn = () => {
     // debugger
     // console.log(localStorage.getItem('token'))
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("is_admin");
+    props.setIslogin(false);
     logout()
       .then((res) => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
-        localStorage.removeItem("is_admin");
         message.success("log out success");
-        props.setIslogin(false);
         navigate(`/login`);
       })
       .catch((err) => {

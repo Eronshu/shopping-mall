@@ -67,7 +67,7 @@ function MainPage() {
           ></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/adminReport" element={<AdminReport />}></Route>
-          <Route path="/checkout" element={<Checkout data={data} />}></Route>
+          <Route path="/checkout" element={<Checkout data={data} setData={setData} />}></Route>
           <Route
             path="/RecoveryQuestion"
             element={<RecoveryQuestion />}

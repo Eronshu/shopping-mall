@@ -26,11 +26,12 @@ export default function ShoppingCart(props) {
   // Columns to be displayed in the shopping cart table
   const columns = [
     {
-      title: "name",
+      title: "Image",
       dataIndex: "item_id",
       key: "item_id",
       render: (image) => (
         <img
+          alt={image}
           src={`https://eecs4413groupg.cf/images/${image}.jpg`}
           className={image}
           style={{
@@ -40,14 +41,14 @@ export default function ShoppingCart(props) {
       ),
     },
     {
-      title: "quantity",
-      dataIndex: "quantity",
-      key: "number",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: "subtotal",
-      dataIndex: "total",
-      key: "total",
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "number",
     },
     {
       title: "remove",
