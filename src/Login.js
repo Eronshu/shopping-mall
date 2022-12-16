@@ -16,7 +16,7 @@ import {login} from './api'
 import * as React from "react";
 import sha256 from 'js-sha256';
 import { message } from 'antd';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -47,7 +47,6 @@ export default function ResetPassword(props) {
             localStorage.setItem('token', res.data.data.session);
             localStorage.setItem('user', res.data.data.username);
             localStorage.setItem('is_admin', res.data.data.is_admin);
-            debugger
             props.setIslogin(localStorage.getItem('token'))
             props.setIsAdmin(res.data.data.is_admin)
             navigate(`/`);
@@ -111,9 +110,6 @@ export default function ResetPassword(props) {
                                 <Link href="/resetPassword" variant="body2">
                                     Forgot password?
                                 </Link>
-                                {/*<Link href="/RecoveryQuestion" variant="body2">*/}
-                                {/*    Set your Recovery Question*/}
-                                {/*</Link>*/}
                             </Grid>
                         </Grid>
                     </Box>

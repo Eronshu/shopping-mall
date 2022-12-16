@@ -46,6 +46,12 @@ const Header = (props) => {
             <li>
               <Link to="/">Home</Link>
             </li>
+              <li>
+                  <Link to="/resetPassword">Reset Password</Link>
+              </li>
+              <li>
+                  <Link to="/RecoveryQuestion">Set Recovery</Link>
+              </li>
             <li>
               <a href="#" onClick={logoutBtn}>
                 log out
@@ -59,6 +65,12 @@ const Header = (props) => {
             <li>
               <Link to="/adminReport">report</Link>
             </li>
+              <li>
+                  <Link to="/resetPassword">Reset Password</Link>
+              </li>
+              <li>
+                  <Link to="/RecoveryQuestion">Set Recovery</Link>
+              </li>
             <li>
               <a href="#" onClick={logoutBtn}>
                 log out

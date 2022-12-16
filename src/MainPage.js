@@ -6,13 +6,12 @@ import ItemDetails from "./ItemDetails";
 import Login from "./Login";
 import Register from "./Register";
 import ShoppingCart from "./ShoppingCart";
-import { getAllCartItems, getCartMock } from "./api/shoppingCartApi";
+import { getAllCartItems} from "./api/shoppingCartApi";
 import { AdminReport } from "./AdminReport";
 import Checkout from "./Checkout";
-import { ThemeProvider } from "@mui/material/styles";
 import Header from "./components/Header";
 import RecoveryQuestion from "./RecoveryQuestion";
-import ResetPassword from "./Login";
+import ResetPassword from "./ResetPassword";
 
 function MainPage() {
   const [data, setData] = useState([]);
