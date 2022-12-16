@@ -151,21 +151,6 @@ export default function Checkout(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: "relative",
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Team G shopping mall
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
