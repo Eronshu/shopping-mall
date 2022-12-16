@@ -45,7 +45,7 @@ export default function ItemDetails(props) {
     const existingIndex = props.data.findIndex(it=>it.item_id===params.id);
     let existingItem;
     let totalQuantity = value;
-    if(existingIndex>0){
+    if(existingIndex>=0){
       existingItem = props.data[existingIndex];
       totalQuantity+=existingItem.quantity;
     }

@@ -14,7 +14,11 @@ import RecoveryQuestion from "./RecoveryQuestion";
 import ResetPassword from "./ResetPassword";
 
 function MainPage() {
-  const [data, setData] = useState([]);
+  const [data, setDataState] = useState(localStorage.getItem("cart")||[]);
+  const setData = (cart)=>{
+    localStorage.setItem("cart",cart);
+    setDataState(cart);
+  }
   const [isLogin, setIslogin] = useState(localStorage.getItem("token"));
   const [isAdmin, setIsAdmin] = useState(
     Boolean(eval(localStorage.getItem("is_admin")))
