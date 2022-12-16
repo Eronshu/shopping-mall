@@ -9,11 +9,14 @@ export default function ShoppingCart(props) {
   // State to store the total price of the items in the shopping cart
   const [totalPrice, setTotalPrice] = useState(0);
   // Function to handle the closing of an item in the shopping cart
-  const onCloseClick = (id) => {
+  const onCloseClick = (item_id) => {
+    console.log(props.data);
+    console.log(item_id);
     debugger;
-    deleteCartItem(id)
+    deleteCartItem(item_id)
       .then((res) => {
         console.log(res);
+        debugger;
       })
       .catch((err) => {
         console.log(err);
@@ -24,11 +27,11 @@ export default function ShoppingCart(props) {
   const columns = [
     {
       title: "name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "item_id",
+      key: "item_id",
       render: (image) => (
         <img
-          src={image}
+          src={`https://eecs4413groupg.cf/images/${image}.jpg`}
           className={image}
           style={{
             width: 100,
@@ -37,8 +40,8 @@ export default function ShoppingCart(props) {
       ),
     },
     {
-      title: "amount",
-      dataIndex: "number",
+      title: "quantity",
+      dataIndex: "quantity",
       key: "number",
     },
     {
@@ -50,9 +53,13 @@ export default function ShoppingCart(props) {
       title: "remove",
       dataIndex: "operation",
       key: "operation",
-      render: (_, { id }) => (
-        <Button type="primary" key={id} onClick={() => onCloseClick(id)}>
-          <CloseCircleFilled key={id} />
+      render: (_, { item_id }) => (
+        <Button
+          type="primary"
+          key={item_id}
+          onClick={() => onCloseClick(item_id)}
+        >
+          <CloseCircleFilled key={item_id} />
           delete
         </Button>
       ),

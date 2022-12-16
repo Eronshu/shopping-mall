@@ -12,6 +12,7 @@ import { updateShoppingCartItem } from "./api/shoppingCartApi";
 
 export default function ItemDetails(props) {
   const params = useParams();
+  const [value, setValue] = useState(1);
   const [itemInfo, setItemInfo] = useState({
     image: "",
     name: "",
@@ -26,12 +27,10 @@ export default function ItemDetails(props) {
 
   useEffect(() => {
     getSpecificItem(params.id).then((res) => {
-      console.log(res.data);
       setItemInfo(res.data.data);
     });
     getReview(params.id)
       .then((res) => {
-        console.log(res);
         setComment(res.data.data);
       })
       .catch((err) => {
@@ -43,12 +42,16 @@ export default function ItemDetails(props) {
     // console.log(params.id)
     // // debugger
     const id = params.id;
-    updateShoppingCartItem(id, 1).then((res) => {
-      console.log(res);
-      const newList = props.data.concat(itemInfo);
-      props.setData(newList);
-      debugger;
-    });
+    updateShoppingCartItem(id, value)
+      .then((res) => {
+        console.log(res);
+        const newList = props.data.concat(itemInfo);
+        props.setData(newList);
+        debugger;
+      })
+      .catch((err) => {
+        message.error("something wrong here");
+      });
   }
 
   function handleFormSubmit(event) {
@@ -76,13 +79,21 @@ export default function ItemDetails(props) {
     <div className="root">
       <Row className="container">
         <Col span={12} className="[all_height, left_page]">
-          <img src={itemInfo.image} className="info_image"></img>
+          <img src={`https://eecs4413groupg.cf/images/${itemInfo.id}.jpg`} className="info_image"></img>
         </Col>
         <Col span={12} className="all_height">
           <h3 className="title">{itemInfo.name}</h3>
           <p className="desc">{itemInfo.description}</p>
           <p className="price">${itemInfo.price}</p>
           <div className="buttonGrop">
+            <div>
+              <button onClick={() => setValue(value + 1)}>+</button>
+              <input type="number" value={value} min={1} readOnly />
+              {/* 当value大于等于1时才能减少 */}
+              <button onClick={() => value >= 1 && setValue(value - 1)}>
+                -
+              </button>
+            </div>
             {props.isLogin && (
               <Button
                 type="primary"

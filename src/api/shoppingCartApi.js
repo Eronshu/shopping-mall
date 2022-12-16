@@ -1,18 +1,10 @@
 import axios from "axios";
 const baseUrl = "http://localhost:8080/EECS4413Project";
+const token = localStorage.getItem("token");
 
 //------------------------------------shoppingCartController-----------------------------------//
-//SHOPPING CART:
-// const shoppingCartItems = [
-//     {item_id: 'XXX', quantity: 0},
-//     {item_id: '051EZXVTANB1QGD4', quantity: 3},
-//     {item_id: '0EIHD7I9TGLOSY6C', quantity: 5}
-// ];
-
 //用户登录后把购物车里的数据传进去，同步购物车
 export function syncShoppingCart(shoppingCartItems) {
-  const token = localStorage.getItem("token");
-
   return axios({
     url: `${baseUrl}/rest/cart`,
     method: "post",
@@ -45,11 +37,12 @@ export function updateShoppingCartItem(itemId, quantity) {
 
 // Delete cart item
 export function deleteCartItem(itemId) {
-  const token = localStorage.getItem("token");
-
+  const formData = new URLSearchParams();
+  formData.append("item_id", itemId);
   return axios({
-    url: `${baseUrl}/rest/cart/${itemId}`,
+    url: `${baseUrl}/rest/cart`,
     method: "delete",
+    data: formData,
     headers: {
       Authorization: token,
     },
@@ -58,8 +51,6 @@ export function deleteCartItem(itemId) {
 
 //get all cart items
 export function getAllCartItems() {
-  const token = localStorage.getItem("token");
-
   return axios({
     url: `${baseUrl}/rest/cart`,
     method: "get",

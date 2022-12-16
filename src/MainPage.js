@@ -6,16 +6,16 @@ import ItemDetails from "./ItemDetails";
 import Login from "./Login";
 import Register from "./Register";
 import ShoppingCart from "./ShoppingCart";
-import { getAllCartItems, getCartMock } from "./api/shoppingCartApi";
+import { getAllCartItems} from "./api/shoppingCartApi";
 import { AdminReport } from "./AdminReport";
 import Checkout from "./Checkout";
-import { ThemeProvider } from "@mui/material/styles";
 import Header from "./components/Header";
+import RecoveryQuestion from "./RecoveryQuestion";
+import ResetPassword from "./ResetPassword";
 
 function MainPage() {
   const [data, setData] = useState([]);
   const [isLogin, setIslogin] = useState(localStorage.getItem("token"));
-  // const [isLogin, setIslogin] = useState(false)
   const [isAdmin, setIsAdmin] = useState(
     Boolean(eval(localStorage.getItem("is_admin")))
   );
@@ -68,6 +68,14 @@ function MainPage() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/adminReport" element={<AdminReport />}></Route>
           <Route path="/checkout" element={<Checkout data={data} />}></Route>
+          <Route
+            path="/RecoveryQuestion"
+            element={<RecoveryQuestion />}
+          ></Route>
+          <Route
+            path="/resetPassword"
+            element={<ResetPassword isLogin={isLogin} />}
+          ></Route>
         </Routes>
       </div>
     </Router>
