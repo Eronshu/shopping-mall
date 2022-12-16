@@ -28,7 +28,6 @@ export function updateShoppingCartItem(itemId, quantity) {
     const formData = new URLSearchParams();
     formData.append('item_id', itemId);
     formData.append('quantity', quantity);
-
     return axios({
         url: `${baseUrl}/rest/cart`,
         method: 'put',

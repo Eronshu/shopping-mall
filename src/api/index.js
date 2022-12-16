@@ -35,10 +35,11 @@ export function register({username,password}) {
 // Logout
 export function logout() {
     return axios({
-        url: `${baseUrl}/rest/user/sign-out`,
+        url: `http://localhost:8080/EECS4413Project/rest/user/sign-out`,
         method: 'post',
         headers: {
-            'Authorization': localStorage.getItem('token')
+            'Authorization': token,
+
         },
     });
 }

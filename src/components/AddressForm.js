@@ -26,7 +26,7 @@ export default function AddressForm(props) {
             console.log(res)
             debugger
         }).catch(err=>{
-            console.log(err.response.data)
+            console.log(err)
         })
     },[])
     return (

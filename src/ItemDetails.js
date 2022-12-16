@@ -33,9 +33,10 @@ export default function ItemDetails(props) {
     }, [])
 
     function addToCart() {
-
-        const id = params.id;
-        updateShoppingCartItem({itemId:id,quantity:'1'}).then(res=>{
+        // console.log(params.id)
+        // // debugger
+        const id =params.id;
+        updateShoppingCartItem(id,1).then(res=>{
             console.log(res)
             debugger
         })
@@ -80,16 +81,16 @@ export default function ItemDetails(props) {
                         </Link>}
 
                         <Link to="/">
-                            <Button type="link">Back to Home Page</Button>
+                            <Button type="link" >Back to Home Page</Button>
                         </Link>
                     </div>
                 </Col>
             </Row>
-            <div>
+            <div className='review'>
                 <h3>Product review</h3>
                 <form onSubmit={handleFormSubmit}>
-                    <label name="rating">
-                        rate:
+                    <label name="rating" className='rate'>
+                       rate:
                         <select>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -100,16 +101,20 @@ export default function ItemDetails(props) {
                     </label>
                     <br/>
                     <label htmlFor="review-text">please enter your review：</label>
-                    <textarea id="review-text" name="review"/>
+                    <textarea id="review-text" name="review" className='text_review'/>
                     <br/>
-                    <button type="submit">submit</button>
+                    <Button type="primary" size="large" className='button'>submit</Button>
                 </form>
+                <br/>
+                <br/>
+                <br/>
                 <hr/>
                 {comment.map((commentObj, idx) => (
-                    <div key={idx}>
+                    <div key={idx} className='comment'>
                         <h4>User:{commentObj.user_id}</h4>
                         <p>Rating: {commentObj.rating}</p>
                         <p>comment:{commentObj.comment}</p>
+                        <hr/>
                     </div>
                 ))
                 }

@@ -30,7 +30,7 @@ export default function App(props) {
     }, []);
     const logoutBtn = () => {
         // debugger
-        console.log(localStorage.getItem('token'))
+        // console.log(localStorage.getItem('token'))
         logout().then(res=>{
             localStorage.removeItem('token');
             localStorage.removeItem('username');
