@@ -15,11 +15,13 @@ const Header = (props) => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("is_admin");
+    navigate(`/login`);
+
     props.setIslogin(false);
+    props.setData([]);
     logout()
       .then((res) => {
         message.success("log out success");
-        navigate(`/login`);
       })
       .catch((err) => {
         console.log(err);
@@ -33,6 +35,9 @@ const Header = (props) => {
       <div>
         {!props.isLogin && (
           <ul className="login">
+            <li>
+              <Link to="/shoppingCart">Shopping Cart({props.data.length})</Link>
+            </li>
             <li>
               <Link to="/login">Log In</Link>
             </li>

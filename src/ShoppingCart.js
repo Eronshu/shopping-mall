@@ -11,13 +11,20 @@ export default function ShoppingCart(props) {
   const [totalPrice, setTotalPrice] = useState(0);
   // Function to handle the closing of an item in the shopping cart
   const onCloseClick = (item_id) => {
+    if(props.isLogin){
     deleteCartItem(item_id)
       .then((res) => {
+        const newCart = props.data.filter(it=>it.item_id!==item_id);
+        props.setData(newCart);
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
+    }else{
+      const newCart = props.data.filter(it=>it.item_id!==item_id);
+      props.setData(newCart);
+    }
   };
 
   // Columns to be displayed in the shopping cart table
@@ -105,7 +112,7 @@ export default function ShoppingCart(props) {
           onClick={() => navigate(props.isLogin ? "/checkout" : "/login")}
           height
         >
-          {props.isLogin ? "Check Out" : "Please login first"}
+          {props.isLogin ? "Check Out" : "Please login to checkout"}
         </Button>
       </footer>
     </div>

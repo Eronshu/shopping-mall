@@ -64,18 +64,23 @@ export default function ItemDetails(props) {
   }
 
   function addToCartNotLogIn() {
-    storeShopList(itemInfo.id, itemInfo.name, itemInfo.price, value);
-  }
-  function storeShopList(item_id, name, price, quantity) {
-    let shopListItem = {
-      item_id: item_id,
-      name: name,
-      price: price,
-      quantity: quantity,
-    };
-    props.shopList.push(shopListItem);
-    debugger;
-    localStorage.setItem("shopList", JSON.stringify(props.shopList));
+
+    const existingIndex = props.data.findIndex(it=>it.item_id===params.id);
+    let existingItem;
+    let totalQuantity = value;
+    if(existingIndex>=0){
+      existingItem = props.data[existingIndex];
+      totalQuantity+=existingItem.quantity;
+    }
+    if(existingIndex>=0){
+      const newList = props.data
+        .slice();
+      newList.splice(existingIndex,1,{...existingItem, quantity: totalQuantity});
+      props.setData(newList);
+    }else{
+      const newList = props.data.concat({...itemInfo, quantity: value, item_id:itemInfo.id});
+      props.setData(newList);
+    }
   }
 
   function handleFormSubmit(event) {
