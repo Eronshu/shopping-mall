@@ -28,7 +28,7 @@ const Header = (props) => {
   return (
     <div className="center">
       <div className="shopcart">
-        <Link to="/shoppingCart">Shopping Cart({props.data.length})</Link>
+        <Link to="/" style={{ textDecoration: 'none' }}>Home</Link>
       </div>
       <div>
         {!props.isLogin && (
@@ -45,17 +45,17 @@ const Header = (props) => {
         {props.isLogin && !props.isAdmin && (
           <ul className="login">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/shoppingCart">Shopping Cart({props.data.length})</Link>
             </li>
-              <li>
-                  <Link to="/resetPassword">Reset Password</Link>
-              </li>
-              <li>
-                  <Link to="/RecoveryQuestion">Set Recovery</Link>
-              </li>
+            <li>
+              <Link to="/resetPassword">Reset Password</Link>
+            </li>
+            <li>
+              <Link to="/RecoveryQuestion">Set Recovery</Link>
+            </li>
             <li>
               <a href="#" onClick={logoutBtn}>
-                log out
+                Log Out
               </a>
             </li>
           </ul>
@@ -64,17 +64,20 @@ const Header = (props) => {
         {props.isLogin && props.isAdmin && (
           <ul className="login">
             <li>
-              <Link to="/adminReport">report</Link>
+              <Link to="/shoppingCart">Shopping Cart({props.data.length})</Link>
             </li>
-              <li>
-                  <Link to="/resetPassword">Reset Password</Link>
-              </li>
-              <li>
-                  <Link to="/RecoveryQuestion">Set Recovery</Link>
-              </li>
+            <li>
+              <Link to="/adminReport">Report</Link>
+            </li>
+            <li>
+              <Link to="/resetPassword">Reset Password</Link>
+            </li>
+            <li>
+              <Link to="/RecoveryQuestion">Set Recovery</Link>
+            </li>
             <li>
               <a href="#" onClick={logoutBtn}>
-                log out
+                Log Out
               </a>
             </li>
           </ul>
