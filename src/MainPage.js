@@ -19,11 +19,19 @@ function MainPage() {
   const [isAdmin, setIsAdmin] = useState(
     Boolean(eval(localStorage.getItem("is_admin")))
   );
+  let shopList=[];
+  // const [shopList, setShopList] = useState([]);
   // Fetch the cart data on component mount
   useEffect(() => {
-    getAllCartItems().then((res) => {
-      setData(res.data.data);
-    });
+    if(isLogin) {
+      getAllCartItems().then((res) => {
+        setData(res.data.data);
+      });
+    }else{
+      // setShopList(JSON.parse(localStorage.getItem('shopList')))
+      console.log(shopList);
+      setData(JSON.parse(localStorage.getItem('shopList')))
+    }
   }, []);
 
   return (
@@ -52,18 +60,18 @@ function MainPage() {
           <Route
             path="/details/:id"
             element={
-              <ItemDetails data={data} setData={setData} isLogin={isLogin} />
+              <ItemDetails data={data} setData={setData} shopList={shopList} isLogin={isLogin} />
             }
           ></Route>
           <Route
             path="/shoppingCart"
             element={
-              <ShoppingCart data={data} setData={setData} isLogin={isLogin} />
+              <ShoppingCart data={data} setData={setData}  isLogin={isLogin} />
             }
           ></Route>
           <Route
             path="/login"
-            element={<Login setIslogin={setIslogin} setIsAdmin={setIsAdmin} />}
+            element={<Login setIslogin={setIslogin} setIsAdmin={setIsAdmin} shopList={shopList} />}
           ></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/adminReport" element={<AdminReport />}></Route>

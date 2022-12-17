@@ -11,12 +11,14 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {login} from './api'
 import * as React from "react";
 import sha256 from 'js-sha256';
-import { message } from 'antd';
-import { useNavigate} from "react-router-dom";
+import {message} from 'antd';
+import {useNavigate} from "react-router-dom";
+import {syncShoppingCart} from "./api/shoppingCartApi";
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -47,6 +49,17 @@ export default function ResetPassword(props) {
             localStorage.setItem('token', res.data.data.session);
             localStorage.setItem('user', res.data.data.username);
             localStorage.setItem('is_admin', res.data.data.is_admin);
+
+        }).then(res => {
+            // let itemIdsAndQuantity =JSON.parse(localStorage.getItem('shopList')).map(item => ({ item_id: item.item_id, quantity: item.quantity }));
+            syncShoppingCart(JSON.parse(localStorage.getItem('shopList'))).then(res => {
+                localStorage.removeItem('shopList');
+                debugger
+            }).catch(err => {
+                console.log(JSON.parse(localStorage.getItem('shopList')))
+                console.log(err)
+                debugger
+            })
             props.setIslogin(localStorage.getItem('token'))
             props.setIsAdmin(res.data.data.is_admin)
             navigate(`/`);
@@ -57,7 +70,7 @@ export default function ResetPassword(props) {
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
+                <CssBaseline/>
                 <Box
                     sx={{
                         marginTop: 8,
@@ -66,13 +79,13 @@ export default function ResetPassword(props) {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
+                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                        <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Log in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
                         <TextField
                             margin="normal"
                             required
@@ -94,14 +107,14 @@ export default function ResetPassword(props) {
                             autoComplete="current-password"
                         />
                         <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
+                            control={<Checkbox value="remember" color="primary"/>}
                             label="Remember me"
                         />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{mt: 3, mb: 2}}
                         >
                             Log in
                         </Button>
@@ -114,7 +127,7 @@ export default function ResetPassword(props) {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+                <Copyright sx={{mt: 8, mb: 4}}/>
             </Container>
         </ThemeProvider>
     );

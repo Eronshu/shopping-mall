@@ -10,13 +10,9 @@ export default function ShoppingCart(props) {
   const [totalPrice, setTotalPrice] = useState(0);
   // Function to handle the closing of an item in the shopping cart
   const onCloseClick = (item_id) => {
-    console.log(props.data);
-    console.log(item_id);
-    debugger;
     deleteCartItem(item_id)
       .then((res) => {
         console.log(res);
-        debugger;
       })
       .catch((err) => {
         console.log(err);
