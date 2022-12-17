@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:8080/EECS4413Project";
+import {baseUrl} from "./constants"
 
 //---------------UserController-----------------------//
 // Login

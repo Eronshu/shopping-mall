@@ -1,8 +1,9 @@
 import axios from "axios";
-const baseUrl = 'http://localhost:8080/EECS4413Project'
-const token = localStorage.getItem('token');
+import {baseUrl} from "./constants"
 // Create order
 export function getOrders(month, year) {
+    const token = localStorage.getItem('token');
+
     const Data = new URLSearchParams();
     Data.append('month', month);
     Data.append('year', year);
@@ -17,6 +18,8 @@ export function getOrders(month, year) {
 }
 
 export function getVisitEvents(from_month, from_year,to_month,to_year,type) {
+    const token = localStorage.getItem('token');
+
     return axios({
         url: `${baseUrl}/rest/report/usage?from_month=${from_month}&from_year=${from_year}&to_month=${to_month}&to_year=${to_year}&type=${type}`,
         method: 'get',

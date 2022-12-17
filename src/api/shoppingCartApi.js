@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:8080/EECS4413Project";
+import {baseUrl} from "./constants"
 
 //------------------------------------shoppingCartController-----------------------------------//
 //用户登录后把购物车里的数据传进去，同步购物车
