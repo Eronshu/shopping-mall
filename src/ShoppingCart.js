@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./res/ShoppingCart.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Table } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { deleteCartItem } from "./api/shoppingCartApi";
 
 export default function ShoppingCart(props) {
+  const navigate = useNavigate();
   // State to store the total price of the items in the shopping cart
   const [totalPrice, setTotalPrice] = useState(0);
   // Function to handle the closing of an item in the shopping cart
@@ -22,11 +23,12 @@ export default function ShoppingCart(props) {
   // Columns to be displayed in the shopping cart table
   const columns = [
     {
-      title: "name",
+      title: "Image",
       dataIndex: "item_id",
       key: "item_id",
       render: (image) => (
         <img
+          alt={image}
           src={`https://eecs4413groupg.cf/images/${image}.jpg`}
           className={image}
           style={{
@@ -36,14 +38,14 @@ export default function ShoppingCart(props) {
       ),
     },
     {
-      title: "quantity",
-      dataIndex: "quantity",
-      key: "number",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: "subtotal",
-      dataIndex: "total",
-      key: "total",
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "number",
     },
     {
       title: "remove",
@@ -66,8 +68,8 @@ export default function ShoppingCart(props) {
   useEffect(() => {
     if (props.data.length > 0) {
       let sum = 0;
-      props.data.forEach((thing) => {
-        sum += thing.price;
+      props.data.forEach(({ price, quantity }) => {
+        sum += price * quantity;
       });
       // Update the total price
       setTotalPrice(sum);
@@ -94,16 +96,17 @@ export default function ShoppingCart(props) {
       <footer className="CartFooter">
         <Link to="/">Continue shopping</Link>
         <p className="totalMoney">
-          Total(Tax not include): <span className="totalum">${totalPrice}</span>
+          Total(Tax not included):{" "}
+          <span className="totalum">${totalPrice}</span>
         </p>
-        <p className="submit">
-          {props.isLogin && (
-            <Link style={{ textDecoration: "none" }} to="/checkout">
-              Check Out
-            </Link>
-          )}
-          {!props.isLogin && <Link to="/login">please login first</Link>}
-        </p>
+        <Button
+          type="primary"
+          size="large"
+          onClick={() => navigate(props.isLogin ? "/checkout" : "/login")}
+          height
+        >
+          {props.isLogin ? "Check Out" : "Please login first"}
+        </Button>
       </footer>
     </div>
   );

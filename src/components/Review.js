@@ -11,17 +11,13 @@ export default function Review({ cart }) {
   const [products, setProducts] = useState(cart);
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
-    getCartMock().then((res) => {
-      setProducts(res.data);
-
-      if (res.data.length > 0) {
-        let sum = 0;
-        res.data.forEach(({ price }) => {
-          sum += price;
-        });
-        setTotalPrice(sum);
-      }
-    });
+    if (cart.length > 0) {
+      let sum = 0;
+      cart.forEach(({ price, quantity }) => {
+        sum += price*quantity;
+      });
+      setTotalPrice(sum);
+    }
   }, []);
 
   return (
@@ -33,7 +29,7 @@ export default function Review({ cart }) {
         {products.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
             <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+            <Typography variant="body2">{Math.round(100*product.price*product.quantity)/100}</Typography>
           </ListItem>
         ))}
 

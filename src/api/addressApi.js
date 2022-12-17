@@ -1,26 +1,30 @@
 import axios from "axios";
 const baseUrl = 'http://localhost:8080/EECS4413Project'
-const token = localStorage.getItem('token');
 
-export function addAddress({ street, province, country, zip, phone }) {
+export async function addAddress({ street, province, country, zip, phone }) {
+    const token = localStorage.getItem('token');
+
     const params = new URLSearchParams();
     params.append('street', street);
     params.append('province', province);
     params.append('country', country);
     params.append('zip', zip);
     params.append('phone', phone);
-    return axios({
+    const res = await axios({
         url: `${baseUrl}/rest/address`,
         method: 'post',
         data: params,
         headers: {
-            'Content-Type': 'x-www-form-urlencoded',
+            "Content-Type": "application/x-www-form-urlencoded",
             'Authorization': token
         }
-    })
+    });
+    return res.data.data.address_id;
 }
 
 export function updateAddress({ address_id, street, province, country, zip, phone }) {
+    const token = localStorage.getItem('token');
+
     const params = new URLSearchParams();
     params.append('address_id', address_id);
     params.append('street', street);
@@ -39,8 +43,9 @@ export function updateAddress({ address_id, street, province, country, zip, phon
     })
 }
 
-
 export function getAddressById(address_id) {
+    const token = localStorage.getItem('token');
+
     return axios({
         url: `${baseUrl}/rest/address/${address_id}`,
         method: 'get',
@@ -51,6 +56,8 @@ export function getAddressById(address_id) {
 }
 
 export function getAllAddressesFromUser(){
+    const token = localStorage.getItem('token');
+
     return axios({
         url: `${baseUrl}/rest/address`,
         method: 'get',

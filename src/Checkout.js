@@ -1,4 +1,5 @@
 import * as React from "react";
+import { message } from "antd";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -17,6 +18,8 @@ import PaymentForm from "./components/PaymentForm";
 import Review from "./components/Review";
 import BillingAddressForm from "./components/BillingAddressForm";
 import { useState } from "react";
+import { addAddress } from "./api/addressApi";
+import { createOrder, processPayment } from "./api/orderApi";
 
 function Copyright() {
   return (
@@ -31,18 +34,13 @@ function Copyright() {
   );
 }
 
-const steps = [
-  "Shipping address",
-  "Billing address",
-  "Review your order",
-  "Payment details",
-];
+const steps = ["Shipping address", "Review your order", "Payment details"];
 
 const theme = createTheme();
 
 export default function Checkout(props) {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [checkoutData, setCheckoutData] = React.useState({
+  const [activeStep, setActiveStep] = useState(0);
+  const [checkoutData, setCheckoutData] = useState({
     firstName: "",
     lastName: "",
     street: "",
@@ -64,26 +62,59 @@ export default function Checkout(props) {
     expDate: "",
     cvv: "",
   });
-  const processCheckout = () => {
-    console.log(
-      "🚀 ~ file: Checkout.js:65 ~ processCheckout ~ checkoutData",
-      checkoutData
-    );
 
-    console.log(
-      "🚀 ~ file: Checkout.js:66 ~ processCheckout ~ cardInfo",
-      cardInfo
+  const [addressID, setAddressID] = useState("");
+  const [orderID, setOrderID] = useState("");
+
+  const processCheckout = async () => {
+    const addressID = await addAddress(checkoutData);
+    const orderID = await createOrder(
+      checkoutData.firstName,
+      checkoutData.lastName,
+      addressID
     );
-    // addAddress
-    // createOrder
-    // processPayment
+    return processPayment(
+      orderID,
+      cardInfo.cardNumber,
+      cardInfo.expDate,
+      cardInfo.cvv
+    );
   };
 
-  const handleNext = () => {
-    if (activeStep < 3) {
+  const handleNext = async () => {
+    try {
+      switch (activeStep) {
+        case 0:
+          const aID = await addAddress(checkoutData);
+          setAddressID(aID);
+          debugger;
+          break;
+        case 1:
+          const oID = await createOrder(
+            checkoutData.firstName,
+            checkoutData.lastName,
+            addressID
+          );
+          setOrderID(oID);
+          debugger;
+
+          break;
+        case 2:
+          await processPayment(
+            orderID,
+            cardInfo.cardNumber,
+            cardInfo.expDate,
+            cardInfo.cvv
+          );
+          props.setData([]);
+          debugger;
+
+          break;
+        default:
+      }
       setActiveStep(activeStep + 1);
-    } else {
-      processCheckout();
+    } catch (err) {
+      message.error(err.response.data.msg);
     }
   };
 
@@ -109,12 +140,8 @@ export default function Checkout(props) {
           />
         );
       case 1:
-        return (
-          <BillingAddressForm data={checkoutData} setData={setCheckoutData} />
-        );
-      case 2:
         return <Review cart={props.data} />;
-      case 3:
+      case 2:
         return <PaymentForm cardInfo={cardInfo} setCardInfo={setCardInfo} />;
       default:
         throw new Error("Unknown step");
@@ -124,21 +151,6 @@ export default function Checkout(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: "relative",
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Team G shopping mall
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
@@ -160,7 +172,7 @@ export default function Checkout(props) {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
+                Your order number is #{orderID}. We have emailed your order
                 confirmation, and will send you an update when your order has
                 shipped.
               </Typography>

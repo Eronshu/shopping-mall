@@ -38,10 +38,25 @@ export default function ItemDetails(props) {
 
   function addToCart() {
     const id = params.id;
-    updateShoppingCartItem(id, value)
+    const existingIndex = props.data.findIndex(it=>it.item_id===params.id);
+    let existingItem;
+    let totalQuantity = value;
+    if(existingIndex>=0){
+      existingItem = props.data[existingIndex];
+      totalQuantity+=existingItem.quantity;
+    }
+    updateShoppingCartItem(id, totalQuantity)
       .then((res) => {
-        const newList = props.data.concat(itemInfo);
-        props.setData(newList);
+        if(existingIndex>=0){
+          const newList = props.data
+            .slice();
+          newList.splice(existingIndex,1,{...existingItem, quantity: totalQuantity});
+          props.setData(newList);
+        }else{
+          const newList = props.data.concat({...itemInfo, quantity: value, item_id:itemInfo.id});
+          props.setData(newList);
+        }
+        debugger;
       })
       .catch((err) => {
         message.error("add failed");
@@ -167,7 +182,7 @@ export default function ItemDetails(props) {
         <br />
         <br />
         <hr />
-        {comment.map((commentObj, idx) => (
+        {comment.filter((c=>c.comment)).map((commentObj, idx) => (
           <div key={idx} className="comment">
             <h4>User:{commentObj.user_id}</h4>
             <label>
