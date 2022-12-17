@@ -179,16 +179,16 @@ export function getItemByIdMock(id) {
   });
 }
 
-// // Get all orders
-// export function getOrders(token) {
-//   return axios({
-//     url: `${baseUrl}/rest/orders`,
-//     method: "get",
-//     headers: {
-//       Authorization: token,
-//     },
-//   });
-// }
+// Get all orders
+export function getOrders(token) {
+  return axios({
+    url: `${baseUrl}/rest/orders`,
+    method: "get",
+    headers: {
+      Authorization: token,
+    },
+  });
+}
 
 // Get order by id
 export function getOrderById(orderId, token) {

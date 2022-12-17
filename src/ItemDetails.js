@@ -1,9 +1,7 @@
 import React, { useState, useEffect, Component } from "react";
 import { Row, Col, Radio, Button, message } from "antd";
 import Rating from "@mui/material/Rating";
-import TextField from "@mui/material/TextField";
 
-// #6caef9 #3b93f7
 import "./res/ItemDetail.css";
 import { Link, useParams } from "react-router-dom";
 import { getItemByIdMock, getSpecificItem } from "./api";
@@ -39,8 +37,6 @@ export default function ItemDetails(props) {
   }, []);
 
   function addToCart() {
-    // console.log(params.id)
-    // // debugger
     const id = params.id;
     const existingIndex = props.data.findIndex(it=>it.item_id===params.id);
     let existingItem;
@@ -51,7 +47,6 @@ export default function ItemDetails(props) {
     }
     updateShoppingCartItem(id, totalQuantity)
       .then((res) => {
-        console.log(res);
         if(existingIndex>=0){
           const newList = props.data
             .slice();
@@ -64,17 +59,30 @@ export default function ItemDetails(props) {
         debugger;
       })
       .catch((err) => {
-        message.error("something wrong here");
+        message.error("add failed");
       });
+  }
+
+  function addToCartNotLogIn() {
+    storeShopList(itemInfo.id, itemInfo.name, itemInfo.price, value);
+  }
+  function storeShopList(item_id, name, price, quantity) {
+    let shopListItem = {
+      item_id: item_id,
+      name: name,
+      price: price,
+      quantity: quantity,
+    };
+    props.shopList.push(shopListItem);
+    debugger;
+    localStorage.setItem("shopList", JSON.stringify(props.shopList));
   }
 
   function handleFormSubmit(event) {
     event.preventDefault();
     const id = params.id;
-
     setReview({ id, rating, review })
       .then((res) => {
-        console.log("rating", rating);
         const newList = comment.concat({
           user_id: localStorage.getItem("user"),
           rating: rating,
@@ -84,7 +92,6 @@ export default function ItemDetails(props) {
         debugger;
       })
       .catch((err) => {
-        console.log("rating", rating);
         debugger;
       });
   }
@@ -93,7 +100,10 @@ export default function ItemDetails(props) {
     <div className="root">
       <Row className="container">
         <Col span={12} className="[all_height, left_page]">
-          <img src={`https://eecs4413groupg.cf/images/${itemInfo.id}.jpg`} className="info_image"></img>
+          <img
+            src={`https://eecs4413groupg.cf/images/${itemInfo.id}.jpg`}
+            className="info_image"
+          ></img>
         </Col>
         <Col span={12} className="all_height">
           <h3 className="title">{itemInfo.name}</h3>
@@ -103,7 +113,6 @@ export default function ItemDetails(props) {
             <div>
               <button onClick={() => setValue(value + 1)}>+</button>
               <input type="number" value={value} min={1} readOnly />
-              {/* 当value大于等于1时才能减少 */}
               <button onClick={() => value >= 1 && setValue(value - 1)}>
                 -
               </button>
@@ -119,11 +128,14 @@ export default function ItemDetails(props) {
               </Button>
             )}
             {!props.isLogin && (
-              <Link to="/login">
-                <Button type="primary" size="large" className="button">
-                  please login first to add the item
-                </Button>
-              </Link>
+              <Button
+                type="primary"
+                size="large"
+                className="button"
+                onClick={addToCartNotLogIn}
+              >
+                Add to Cart
+              </Button>
             )}
 
             <Link to="/">
