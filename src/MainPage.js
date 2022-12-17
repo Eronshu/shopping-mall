@@ -28,7 +28,7 @@ function MainPage() {
     setDataState(cart);
   }
   return (
-    <Router>
+    <Router basename='/EECS4413Project'>
       <div>
         <Header
           data={data}
