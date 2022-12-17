@@ -14,35 +14,25 @@ import RecoveryQuestion from "./RecoveryQuestion";
 import ResetPassword from "./ResetPassword";
 
 function MainPage() {
-  const [data, setDataState] = useState(localStorage.getItem("cart")||[]);
-  const setData = (cart)=>{
-    localStorage.setItem("cart",cart);
-    setDataState(cart);
-  }
+  const [data, setDataState] = useState(JSON.parse(localStorage.getItem("shopList"))||[]);
+
+  
   const [isLogin, setIslogin] = useState(localStorage.getItem("token"));
   const [isAdmin, setIsAdmin] = useState(
     Boolean(eval(localStorage.getItem("is_admin")))
   );
-  let shopList=[];
-  // const [shopList, setShopList] = useState([]);
-  // Fetch the cart data on component mount
-  useEffect(() => {
-    if(isLogin) {
-      getAllCartItems().then((res) => {
-        setData(res.data.data);
-      });
-    }else{
-      // setShopList(JSON.parse(localStorage.getItem('shopList')))
-      console.log(shopList);
-      setData(JSON.parse(localStorage.getItem('shopList')))
+  const setData = (cart)=>{
+    if(!isLogin){
+      localStorage.setItem("shopList",JSON.stringify(cart));
     }
-  }, []);
-
+    setDataState(cart);
+  }
   return (
     <Router>
       <div>
         <Header
           data={data}
+          setData={setData}
           isLogin={isLogin}
           isAdmin={isAdmin}
           setIslogin={setIslogin}
@@ -64,18 +54,18 @@ function MainPage() {
           <Route
             path="/details/:id"
             element={
-              <ItemDetails data={data} setData={setData} shopList={shopList} isLogin={isLogin} />
+              <ItemDetails data={data} setData={setData} isLogin={isLogin} />
             }
           ></Route>
           <Route
             path="/shoppingCart"
             element={
-              <ShoppingCart data={data} setData={setData}  isLogin={isLogin} />
+              <ShoppingCart data={data} setData={setData} isLogin={isLogin} />
             }
           ></Route>
           <Route
             path="/login"
-            element={<Login setIslogin={setIslogin} setIsAdmin={setIsAdmin} shopList={shopList} />}
+            element={<Login data={data} setData={setData} setIslogin={setIslogin} setIsAdmin={setIsAdmin} />}
           ></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/adminReport" element={<AdminReport />}></Route>

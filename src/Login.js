@@ -49,20 +49,20 @@ export default function ResetPassword(props) {
             localStorage.setItem('token', res.data.data.session);
             localStorage.setItem('user', res.data.data.username);
             localStorage.setItem('is_admin', res.data.data.is_admin);
-
+            props.setIslogin(localStorage.getItem('token'))
+            props.setIsAdmin(res.data.data.is_admin)
+            navigate(`/`);
         }).then(res => {
-            // let itemIdsAndQuantity =JSON.parse(localStorage.getItem('shopList')).map(item => ({ item_id: item.item_id, quantity: item.quantity }));
-            syncShoppingCart(JSON.parse(localStorage.getItem('shopList'))).then(res => {
+            syncShoppingCart(props.data).then(syncRes => {
                 localStorage.removeItem('shopList');
+                props.setData(syncRes.data.data);
                 debugger
             }).catch(err => {
                 console.log(JSON.parse(localStorage.getItem('shopList')))
                 console.log(err)
                 debugger
             })
-            props.setIslogin(localStorage.getItem('token'))
-            props.setIsAdmin(res.data.data.is_admin)
-            navigate(`/`);
+            
         }).catch(err => {
             message.error(err.response.data.msg)
         })
